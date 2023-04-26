@@ -1,37 +1,73 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 
-import classes from './AuthForm.module.css';
+import classes from "./AuthForm.module.css";
 
-const AuthForm = () => {
+const AuthForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
+  const [enteredEmail, setEmail] = useState("");
+  const [enteredPass, setPass] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
 
+  function emailChangeHandler(e) {
+    setEmail(e.target.value);
+  }
+
+  function passChangeHandler(e) {
+    setPass(e.target.value);
+  }
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    if (isLogin) {
+      props.onSubmit(enteredEmail, enteredPass);
+      setPass("");
+    } else {
+      props.onCreate(enteredEmail, enteredPass);
+      setPass("");
+      setEmail("");
+    }
+  };
+
   return (
     <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form >
+      <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+      <form onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor='email'>Your Email</label>
-          <input type='email' id='email' required />
+          <label htmlFor="email">Your Email</label>
+          <input
+            value={enteredEmail}
+            onChange={emailChangeHandler}
+            type="email"
+            id="email"
+            required
+          />
         </div>
         <div className={classes.control}>
-          <label htmlFor='password'>Your Password</label>
+          <label htmlFor="password">Your Password</label>
           <input
-            type='password'
-            id='password'
+            value={enteredPass}
+            onChange={passChangeHandler}
+            type="password"
+            id="password"
             required
           />
         </div>
         <div className={classes.actions}>
+          <button>
+            {isLogin
+              ? `${isLoading ? "Sending Request..!" : "Log in"}`
+              : "Create Account"}
+          </button>
           <button
-            type='button'
+            type="button"
             className={classes.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? 'Create new account' : 'Login with existing account'}
+            {isLogin ? "Create new account" : "Login with existing account"}
           </button>
         </div>
       </form>
