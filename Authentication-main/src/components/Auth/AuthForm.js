@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import classes from "./AuthForm.module.css";
 
@@ -6,7 +6,6 @@ const AuthForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
   const [enteredEmail, setEmail] = useState("");
   const [enteredPass, setPass] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -21,7 +20,6 @@ const AuthForm = (props) => {
   }
   const submitHandler = (e) => {
     e.preventDefault();
-    setIsLoading(true);
     if (isLogin) {
       props.onSubmit(enteredEmail, enteredPass);
       setPass("");
@@ -59,8 +57,10 @@ const AuthForm = (props) => {
         <div className={classes.actions}>
           <button>
             {isLogin
-              ? `${isLoading ? "Sending Request..!" : "Log in"}`
-              : "Create Account"}
+              ? `${props.isLoading ? "Sending Request..!" : "Log in"}`
+              : `${
+                  props.isLoading ? "Creating New Account.." : "Create Account"
+                }`}
           </button>
           <button
             type="button"
