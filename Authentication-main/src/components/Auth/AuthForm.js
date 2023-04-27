@@ -20,14 +20,7 @@ const AuthForm = (props) => {
   }
   const submitHandler = (e) => {
     e.preventDefault();
-    if (isLogin) {
-      props.onSubmit(enteredEmail, enteredPass);
-      setPass("");
-    } else {
-      props.onCreate(enteredEmail, enteredPass);
-      setPass("");
-      setEmail("");
-    }
+    props.onSubmit(enteredEmail, enteredPass, isLogin);
   };
 
   return (
