@@ -34,13 +34,18 @@ const AuthPage = () => {
         res.json().then((data) => {
           ctx.storeAuthorisation(data.idToken);
           localStorage.setItem("login", data.idToken);
+          autologout();
           histry.push("/");
         });
       }
     });
     setLoading(false);
   }
-
+  function autologout() {
+    setTimeout(() => {
+      localStorage.removeItem("login");
+    }, 300000);
+  }
   return <AuthForm isLoading={isLoading} onSubmit={onSubmitHandler} />;
 };
 
