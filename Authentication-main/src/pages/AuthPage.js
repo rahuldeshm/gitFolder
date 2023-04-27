@@ -32,8 +32,9 @@ const AuthPage = () => {
         });
       } else {
         res.json().then((data) => {
-          histry.push("/profile");
           ctx.storeAuthorisation(data.idToken);
+          localStorage.setItem("login", data.idToken);
+          histry.push("/");
         });
       }
     });

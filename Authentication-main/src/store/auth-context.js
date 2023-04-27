@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
-
+const localauth = localStorage.getItem("login");
 export function AuthContextProvider(props) {
-  const [authorisation, setAuthorisation] = useState(null);
+  const [authorisation, setAuthorisation] = useState(localauth);
   const authorised = !!authorisation;
   function storeAuthorisation(data) {
     setAuthorisation(data);
@@ -20,7 +20,7 @@ export function AuthContextProvider(props) {
 }
 
 const AuthContext = createContext({
-  authorised: false,
+  authorised: "",
   authorisation: "",
   storeAuthorisation: (data) => {},
 });

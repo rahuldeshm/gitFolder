@@ -27,7 +27,7 @@ const ProfileForm = () => {
       }
     ).then((res) => {
       if (res.ok) {
-        history.push("/auth");
+        history.replace("/auth");
         ctx.storeAuthorisation(null);
         console.log("password Changed Successfully");
       } else {

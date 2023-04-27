@@ -10,6 +10,7 @@ const MainNavigation = () => {
   function logoutHandler() {
     history.push("/auth");
     ctx.storeAuthorisation(null);
+    localStorage.removeItem("login");
   }
   return (
     <header className={classes.header}>
