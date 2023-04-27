@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 
 export function AuthContextProvider(props) {
-  const [authorised, setAuthorised] = useState(false);
   const [authorisation, setAuthorisation] = useState(null);
+  const authorised = !!authorisation;
   function storeAuthorisation(data) {
     setAuthorisation(data);
   }
@@ -10,7 +10,7 @@ export function AuthContextProvider(props) {
     <AuthContext.Provider
       value={{
         authorised: authorised,
-        setAuthorised: setAuthorised,
+        authorisation: authorisation,
         storeAuthorisation: storeAuthorisation,
       }}
     >
@@ -21,8 +21,8 @@ export function AuthContextProvider(props) {
 
 const AuthContext = createContext({
   authorised: false,
-  setAuthorised: () => {},
-  storeAuthorisation: () => {},
+  authorisation: "",
+  storeAuthorisation: (data) => {},
 });
 
 export default AuthContext;

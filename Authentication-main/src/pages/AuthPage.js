@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
 import AuthContext from "../store/auth-context";
 import AuthForm from "../components/Auth/AuthForm";
+import { useHistory } from "react-router-dom";
 
 const AuthPage = () => {
+  const histry = useHistory();
   const ctx = useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);
   async function onSubmitHandler(a, b, c) {
@@ -30,8 +32,8 @@ const AuthPage = () => {
         });
       } else {
         res.json().then((data) => {
-          ctx.setAuthorised(true);
-          ctx.storeAuthorisation(data);
+          histry.push("/profile");
+          ctx.storeAuthorisation(data.idToken);
         });
       }
     });
