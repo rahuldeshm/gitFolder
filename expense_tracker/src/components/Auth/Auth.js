@@ -1,7 +1,13 @@
 import { Col, Container, Row } from "react-bootstrap";
-import AuthForm from "./AuthForm";
+import SignUp from "./SignUp";
+import Login from "./Login";
+import { useState } from "react";
 
 function Auth(props) {
+  const [islogin, setisLogin] = useState(true);
+  function logintosignupHandler() {
+    setisLogin((islogin) => !islogin);
+  }
   return (
     <div
       style={{
@@ -21,14 +27,12 @@ function Auth(props) {
         }}
       >
         <Col sm={12}>
-          <Row className="p-3">
-            <h3 className="p-2" style={{ borderBottom: "2px solid black" }}>
-              Sign Up
+          <Row className="p-1">
+            <h3 className="p-3" style={{ borderBottom: "2px solid black" }}>
+              {islogin ? "Sign In" : "Sign Up"}
             </h3>
           </Row>
-          <Row>
-            <AuthForm></AuthForm>
-          </Row>
+          <Row className="p-2">{islogin ? <Login /> : <SignUp />}</Row>
         </Col>
       </Container>
       <Container
@@ -42,8 +46,8 @@ function Auth(props) {
         }}
       >
         <Col sm={12}>
-          <Row className="p-3">
-            <h5>Have an account? Login</h5>
+          <Row className="p-3" onClick={logintosignupHandler}>
+            <h5>{islogin ? "New Here? Sign up." : "Have an account? Login"}</h5>
           </Row>
         </Col>
       </Container>
