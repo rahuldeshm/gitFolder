@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { GiEarthAfricaEurope } from "react-icons/gi";
 import {
@@ -15,33 +15,8 @@ import DataContext from "../../Store/data-context";
 
 function Profile(props) {
   const ctx = useContext(DataContext);
-  const nameRef = useRef();
-  const urlRef = useRef();
-
-  function fetchDataFunction() {
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          idToken: ctx.authorisation.idToken,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((res) => {
-      if (res.ok) {
-        res.json().then((data) => {
-          nameRef.current.value = data.users[0].displayName;
-          urlRef.current.value = data.users[0].photoUrl;
-        });
-      } else {
-        res.json().then((data) => alert(data.error.message));
-      }
-    });
-  }
-  useEffect(fetchDataFunction, [ctx.authorisation]);
+  const nameRef = useRef(ctx.profile.name);
+  const urlRef = useRef(ctx.profile.url);
 
   function profileUpdateHandler(e) {
     e.preventDefault();
@@ -63,9 +38,7 @@ function Profile(props) {
       if (res.ok) {
         res.json().then((data) => {
           console.log(data);
-          // ctx.authorisationHandler(data);
-          // localStorage.setItem("authorised", JSON.stringify(data));
-          // history.replace("/welcome");
+          ctx.profileHandler();
         });
       } else {
         res.json().then((data) => alert(data.error.message));
@@ -85,7 +58,6 @@ function Profile(props) {
             <Col style={{ textAlign: "end" }}>
               <Link to="/welcome">
                 <Button
-                  onClick={props.toggle}
                   size="sm"
                   // style={{ width: "5rem" }}
                   variant="outline-danger"

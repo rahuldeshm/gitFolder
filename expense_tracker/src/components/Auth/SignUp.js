@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRef } from "react";
 import { FloatingLabel, Form, FormControl, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import DataContext from "../../Store/data-context";
 
 function AuthForm(props) {
+  const ctx = useContext(DataContext);
+  const history = useHistory();
   const emailRef = useRef();
   const passRef = useRef();
   const cpassRef = useRef();
@@ -23,7 +27,12 @@ function AuthForm(props) {
         },
       }).then((res) => {
         if (res.ok) {
-          res.json().then((data) => console.log(data));
+          res.json().then((data) => {
+            console.log(data);
+            ctx.authorisationHandler(data);
+            localStorage.setItem("authorised", data);
+            history.push("/welcome");
+          });
         } else {
           res.json().then((data) => alert(data.error.message));
         }
