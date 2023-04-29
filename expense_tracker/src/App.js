@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Welcome from "./components/Welcome/Welcome";
 import { useContext } from "react";
 import DataContext from "./Store/data-context";
+import ForgotPass from "./components/Auth/ForgotPass";
 
 function App() {
   const ctx = useContext(DataContext);
@@ -18,6 +19,9 @@ function App() {
         </Route>
         <Route path="/auth">
           <Auth />
+        </Route>
+        <Route path="/forgot-password">
+          <ForgotPass />
         </Route>
         {ctx.authorised && (
           <Route path="/welcome">

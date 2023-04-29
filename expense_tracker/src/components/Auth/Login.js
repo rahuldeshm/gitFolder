@@ -102,7 +102,7 @@ function Login() {
       >
         Sign in
       </button>
-      <Link to="/"> Forgot password</Link>
+      <Link to="/forgot-password"> Forgot password</Link>
     </Form>
   );
 }
