@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { createContext } from "react";
 
+const login = JSON.parse(localStorage.getItem("authorised"));
 const DataContext = createContext({
   authorised: false,
   authorisation: "",
@@ -9,7 +10,7 @@ const DataContext = createContext({
 });
 
 export function DataContextProvider(props) {
-  const [authorisation, setAuthorisation] = useState(null);
+  const [authorisation, setAuthorisation] = useState(login);
   let authorised = !!authorisation;
   function authorisationHandler(item) {
     setAuthorisation(item);

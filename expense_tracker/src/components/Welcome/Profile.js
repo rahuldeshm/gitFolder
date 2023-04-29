@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { GiEarthAfricaEurope } from "react-icons/gi";
 import {
@@ -17,9 +17,34 @@ function Profile(props) {
   const ctx = useContext(DataContext);
   const nameRef = useRef();
   const urlRef = useRef();
+
+  function fetchDataFunction() {
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          idToken: ctx.authorisation.idToken,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          nameRef.current.value = data.users[0].displayName;
+          urlRef.current.value = data.users[0].photoUrl;
+        });
+      } else {
+        res.json().then((data) => alert(data.error.message));
+      }
+    });
+  }
+  useEffect(fetchDataFunction, [ctx.authorisation]);
+
   function profileUpdateHandler(e) {
     e.preventDefault();
-    console.log(nameRef.current.value, urlRef.current.value);
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
       {

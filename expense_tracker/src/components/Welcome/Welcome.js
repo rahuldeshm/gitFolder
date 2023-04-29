@@ -6,6 +6,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Welcome() {
   const [update, setUpdate] = useState(true);
+
   function toggleHandler() {
     setUpdate((update) => !update);
   }
@@ -35,13 +36,15 @@ function Welcome() {
             {update
               ? "Your Profile is Incomplete"
               : "Your profile is 64% completed, A complete profile has higher chances of landing a job "}
-            <Link
-              style={{ fontStyle: "bolder" }}
-              onClick={toggleHandler}
-              to="/welcome/updateprofile"
-            >
-              Complete Now
-            </Link>
+            {update && (
+              <Link
+                style={{ fontStyle: "bolder" }}
+                onClick={toggleHandler}
+                to="/welcome/updateprofile"
+              >
+                Complete Now
+              </Link>
+            )}
             .
           </p>
         </Col>
