@@ -21,7 +21,7 @@ function Login() {
     e.preventDefault();
     let url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY";
-
+    ctx.loaderHandler();
     fetch(url, {
       method: "POST",
       body: JSON.stringify({
@@ -38,9 +38,13 @@ function Login() {
           ctx.authorisationHandler(data);
           localStorage.setItem("authorised", JSON.stringify(data));
           history.replace("/welcome");
+          ctx.loaderHandler();
         });
       } else {
-        res.json().then((data) => alert(data.error.message));
+        res.json().then((data) => {
+          alert(data.error.message);
+          ctx.loaderHandler();
+        });
       }
     });
   }

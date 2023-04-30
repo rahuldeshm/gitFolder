@@ -15,8 +15,8 @@ import DataContext from "../../Store/data-context";
 
 function Profile(props) {
   const ctx = useContext(DataContext);
-  const nameRef = useRef(ctx.profile.name);
-  const urlRef = useRef(ctx.profile.url);
+  const nameRef = useRef();
+  const urlRef = useRef();
 
   function profileUpdateHandler(e) {
     e.preventDefault();
@@ -71,12 +71,12 @@ function Profile(props) {
             <Row className="m-1" style={{ fontSize: "0.8rem" }}>
               <Col>
                 <FormLabel>
-                  {" "}
                   <AiFillGithub /> Full Name:
                 </FormLabel>
               </Col>
               <Col sm={4}>
                 <FormControl
+                  value={ctx.profile.name}
                   style={{ height: "2rem" }}
                   ref={nameRef}
                 ></FormControl>
@@ -89,6 +89,7 @@ function Profile(props) {
               </Col>
               <Col sm={4}>
                 <FormControl
+                  value={ctx.profile.url}
                   style={{ height: "2rem" }}
                   ref={urlRef}
                 ></FormControl>

@@ -6,6 +6,7 @@ import Welcome from "./components/Welcome/Welcome";
 import { useContext } from "react";
 import DataContext from "./Store/data-context";
 import ForgotPass from "./components/Auth/ForgotPass";
+import Loader from "./components/UI/Loader";
 
 function App() {
   const ctx = useContext(DataContext);
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <Header></Header>
+      {ctx.loader && <Loader />}
       <Switch>
         <Route path="/" exact>
           <Redirect to="auth" />

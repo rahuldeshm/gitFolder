@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import logo from "../../images/lightning_sewer.webp";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
@@ -10,13 +10,16 @@ import {
   Row,
   Image,
 } from "react-bootstrap";
+import DataContext from "../../Store/data-context";
 
 function ForgotPass() {
+  const ctx = useContext(DataContext);
   const history = useHistory();
   const emailRef = useRef();
   function submitFormHandler(e) {
     e.preventDefault();
     console.log(emailRef.current.value);
+    ctx.loaderHandler();
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
       {
@@ -34,10 +37,11 @@ function ForgotPass() {
         res.json().then((data) => {
           console.log(data);
           alert(data.error.message);
+          ctx.loaderHandler();
         });
       } else {
         alert("change password link sent successfully");
-
+        ctx.loaderHandler();
         history.push("/auth");
       }
     });

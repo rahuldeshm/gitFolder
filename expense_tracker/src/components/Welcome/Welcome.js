@@ -41,11 +41,11 @@ function Welcome() {
         className="p-1"
         style={{ height: "auto", borderBottom: "2px solid black" }}
       >
-        <Col sm={6}>
+        <Col sm={5}>
           <h5>Welcome to Expense tracer</h5>
         </Col>
         <Col
-          sm={4}
+          sm={5}
           style={{
             backgroundColor: completed,
             borderRadius: "1rem",
@@ -68,9 +68,12 @@ function Welcome() {
             .
           </p>
         </Col>
-        <Col>
-          <Button onClick={verifyEmailHandler} variant="danger">
-            Verify email
+        <Col sm={2}>
+          <Button
+            onClick={verifyEmailHandler}
+            variant={ctx.emailVerified ? "success" : "danger"}
+          >
+            {ctx.emailVerified ? "Email Verified" : "Verify email"}
           </Button>
         </Col>
       </Row>

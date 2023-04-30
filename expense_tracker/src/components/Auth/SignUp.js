@@ -12,9 +12,11 @@ function AuthForm(props) {
   const cpassRef = useRef();
   function signupHandler(e) {
     e.preventDefault();
+
     let url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY";
     if (passRef.current.value === cpassRef.current.value) {
+      ctx.loaderHandler();
       fetch(url, {
         method: "POST",
         body: JSON.stringify({
@@ -32,9 +34,13 @@ function AuthForm(props) {
             ctx.authorisationHandler(data);
             localStorage.setItem("authorised", data);
             history.push("/welcome");
+            ctx.loaderHandler();
           });
         } else {
-          res.json().then((data) => alert(data.error.message));
+          res.json().then((data) => {
+            ctx.loaderHandler();
+            alert(data.error.message);
+          });
         }
       });
     } else {
