@@ -7,6 +7,7 @@ import { useContext } from "react";
 import DataContext from "./Store/data-context";
 import ForgotPass from "./components/Auth/ForgotPass";
 import Loader from "./components/UI/Loader";
+import ExpensePage from "./components/Expense/ExpensePage";
 
 function App() {
   const ctx = useContext(DataContext);
@@ -17,7 +18,7 @@ function App() {
       {ctx.loader && <Loader />}
       <Switch>
         <Route path="/" exact>
-          <Redirect to="auth" />
+          <Redirect to={ctx.authorised ? "welcome" : "auth"} />
         </Route>
         <Route path="/auth">
           <Auth />
@@ -28,6 +29,11 @@ function App() {
         {ctx.authorised && (
           <Route path="/welcome">
             <Welcome />
+          </Route>
+        )}
+        {ctx.authorised && (
+          <Route path="/expenses">
+            <ExpensePage />
           </Route>
         )}
         <Route path="*">
