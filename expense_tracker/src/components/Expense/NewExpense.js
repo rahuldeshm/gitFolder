@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { useState } from "react";
+import { useContext, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
@@ -8,37 +8,57 @@ import {
   FormSelect,
   Row,
 } from "react-bootstrap";
+import DataContext from "../../Store/data-context";
 
 function NewExpense(props) {
+  const ctx = useContext(DataContext);
   const [cancel, setCancel] = useState(false);
-  const priceRef = useRef();
-  const discriptionRef = useRef();
-  const categaryRef = useRef();
+  const [enteredPrice, setEnteredPrice] = useState("");
+  const [enteredDiscription, setEnteredDiscription] = useState("");
+  const [enteredCategary, setEnteredCategary] = useState("");
   function addExpenseHandler(e) {
     e.preventDefault();
-    const discription = discriptionRef.current.value;
-    const price = priceRef.current.value;
-    const categary = categaryRef.current.value;
-    if (discription !== "" && price !== "" && categary !== "") {
-      fetch(
-        "https://expnesetracker-default-rtdb.firebaseio.com/expenses.json",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            discription,
-            price,
-            categary,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => {
+    let method;
+    let key;
+    if (ctx.editExpense.edit === true) {
+      method = "POST";
+      key = "";
+    } else {
+      key = ctx.editExpense.key;
+      method = "PUT";
+    }
+    let url = `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${key}.json`;
+
+    if (
+      enteredDiscription !== "" &&
+      enteredPrice !== "" &&
+      enteredCategary !== ""
+    ) {
+      fetch(url, {
+        method: method,
+        body: JSON.stringify({
+          discription: enteredDiscription,
+          price: enteredPrice,
+          categary: enteredCategary,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
         if (res.ok) {
-          props.onsubmit(price, discription, categary);
-          priceRef.current.value = "";
-          categaryRef.current.value = "";
-          discriptionRef.current.value = "";
+          res.json().then((data) => {
+            console.log(method, key, data);
+
+            props.onsubmit(
+              enteredPrice,
+              enteredDiscription,
+              enteredCategary,
+              ctx.editExpense.key
+            );
+            setEnteredCategary("");
+            setEnteredDiscription("");
+            setEnteredPrice("");
+          });
         } else {
           res.json().then((data) => {
             alert(data.error.message);
@@ -48,6 +68,24 @@ function NewExpense(props) {
     } else {
       alert("Fill All required fields");
     }
+  }
+
+  function editData() {
+    setEnteredCategary(ctx.editExpense.categary);
+    setEnteredDiscription(ctx.editExpense.discription);
+    setEnteredPrice(ctx.editExpense.price);
+  }
+
+  useEffect(editData, [ctx.editExpense]);
+
+  function priceChangeHandler(e) {
+    setEnteredPrice(e.target.value);
+  }
+  function discriptionChangeHandler(e) {
+    setEnteredDiscription(e.target.value);
+  }
+  function categaryChangeHandler(e) {
+    setEnteredCategary(e.target.value);
   }
   return (
     <Container className="p-5" style={{ height: "36rem", textAlign: "center" }}>
@@ -65,18 +103,25 @@ function NewExpense(props) {
       {cancel && (
         <Form onSubmit={addExpenseHandler}>
           <FormControl
+            value={enteredPrice}
             className="mt-4"
             placeholder="Money Spent"
-            ref={priceRef}
+            onChange={priceChangeHandler}
           />
           <FormControl
+            value={enteredDiscription}
+            onChange={discriptionChangeHandler}
             as="textarea"
             style={{ height: "10rem" }}
             className="mt-3"
             placeholder="Discription"
-            ref={discriptionRef}
           />
-          <FormSelect className="mt-3" ref={categaryRef}>
+          <FormSelect
+            value={enteredCategary}
+            className="mt-3"
+            placeholder="categary"
+            onChange={categaryChangeHandler}
+          >
             <option>food</option>
             <option>petrol</option>
             <option>salary</option>

@@ -13,9 +13,17 @@ const DataContext = createContext({
   profileHandler: () => {},
   loader: false,
   loaderHandler: () => {},
+  editExpense: null,
+  addExpensetoEdit: () => {},
 });
 
 export function DataContextProvider(props) {
+  const [editExpense, setEditExpense] = useState({
+    price: "",
+    discription: "",
+    categary: "",
+    edit: true,
+  });
   const [loader, setLoader] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [profile, setprofileData] = useState({ name: "", url: "" });
@@ -31,6 +39,11 @@ export function DataContextProvider(props) {
   }
   function loaderHandler() {
     setLoader((loader) => !loader);
+  }
+
+  function addExpensetoEdit(item) {
+    setEditExpense(item);
+    console.log(editExpense);
   }
 
   function fetchDataFunction() {
@@ -85,6 +98,8 @@ export function DataContextProvider(props) {
         profileHandler: profileHandler,
         loader: loader,
         loaderHandler: loaderHandler,
+        addExpensetoEdit: addExpensetoEdit,
+        editExpense: editExpense,
       }}
     >
       {props.children}

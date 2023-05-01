@@ -6,8 +6,8 @@ import { useState } from "react";
 
 function ExpensePage() {
   const [list, setList] = useState([]);
-  function onAddHandler(price, discription, categary) {
-    setList((list) => [...list, { price, discription, categary }]);
+  function onAddHandler(price, discription, categary, key) {
+    setList((list) => [...list, { price, discription, categary, key }]);
   }
   function fetchList() {
     fetch("https://expnesetracker-default-rtdb.firebaseio.com/expenses.json", {
@@ -21,7 +21,8 @@ function ExpensePage() {
           const keys = Object.keys(data);
           let arr = [];
           for (let i of keys) {
-            arr.push(data[i]);
+            const datawithkey = { ...data[i], key: i };
+            arr.push(datawithkey);
           }
           setList(arr);
         });
@@ -31,6 +32,13 @@ function ExpensePage() {
     });
   }
   useEffect(fetchList, []);
+
+  function deleteHandler(index) {
+    let li = [...list];
+    li.splice(index, 1);
+    setList(li);
+  }
+
   return (
     <Container fluid style={{ color: "white", backgroundColor: "#0b3738" }}>
       <Row style={{ height: "4rem" }}></Row>
@@ -39,7 +47,7 @@ function ExpensePage() {
           <NewExpense onsubmit={onAddHandler} />
         </Col>
         <Col>
-          <Expenses list={list} />
+          <Expenses deleteHandler={deleteHandler} list={list} />
         </Col>
       </Row>
     </Container>

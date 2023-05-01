@@ -9,8 +9,15 @@ function Expenses(props) {
         <h5>Expenses</h5>
       </Row>
 
-      {props.list.map((e) => {
-        return <ExpenseItem key={e.discription} e={e} />;
+      {props.list.map((e, index) => {
+        return (
+          <ExpenseItem
+            deleteHandler={props.deleteHandler}
+            index={index}
+            key={e.key}
+            e={e}
+          />
+        );
       })}
     </Container>
   );
