@@ -17,7 +17,7 @@ function Header(props) {
       style={{ zIndex: "20", position: "fixed", width: "100%" }}
     >
       <Container>
-        <Image src={logo} roundedCircle style={{ height: "2rem" }}></Image>
+        <Image src={logo} roundedCircle style={{ height: "2rem" }} />
       </Container>
       <Container>
         <Navbar.Brand>MyWebLink</Navbar.Brand>
@@ -25,21 +25,26 @@ function Header(props) {
       <Container>
         <Nav>
           <NavLink to="/" style={{ margin: "5px" }}>
-            Home{" "}
+            <Button size="sm">Home </Button>
           </NavLink>
           {ctx.authorised && (
             <NavLink to="/expenses" style={{ margin: "5px" }}>
               {" "}
-              Expense
+              <Button size="sm">Expense</Button>
             </NavLink>
           )}
           <NavLink to="/" style={{ margin: "5px" }}>
             {" "}
-            AboutUs
+            <Button size="sm">AboutUs</Button>
           </NavLink>
           {ctx.authorised && (
             <a href="http://localhost:3000/">
-              <Button onClick={logoutHandler} variant="outline-danger">
+              <Button
+                style={{ margin: "5px" }}
+                size="sm"
+                onClick={logoutHandler}
+                variant="outline-danger"
+              >
                 logout
               </Button>
             </a>

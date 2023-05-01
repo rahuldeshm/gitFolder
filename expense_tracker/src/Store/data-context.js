@@ -50,7 +50,6 @@ export function DataContextProvider(props) {
       ).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
-            console.log(data);
             if (data.users[0].displayName !== undefined) {
               setCompletedProfile(true);
               setprofileData({

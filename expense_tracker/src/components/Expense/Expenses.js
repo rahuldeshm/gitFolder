@@ -10,7 +10,7 @@ function Expenses(props) {
       </Row>
 
       {props.list.map((e) => {
-        return <ExpenseItem key={e.id} e={e} />;
+        return <ExpenseItem key={e.discription} e={e} />;
       })}
     </Container>
   );
