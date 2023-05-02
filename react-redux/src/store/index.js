@@ -5,11 +5,15 @@ function counterReducer(state = { counter: 0 }, action) {
     return { counter: state.counter + 1 };
   } else if (action.type === "decrement") {
     return { counter: state.counter - 1 };
+  } else if (action.type === "decrement5") {
+    return { counter: state.counter - 5 };
+  } else if (action.type === "increment5") {
+    return { counter: state.counter + 5 };
   }
   return state;
 }
 
-const store = redux.createStore(counterReducer);
+const store = createStore(counterReducer);
 
 console.log(store.getState());
 
