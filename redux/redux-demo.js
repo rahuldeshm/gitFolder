@@ -10,13 +10,12 @@ function counterReducer(state = { counter: 0 }, action) {
       counter: state.counter - 1,
     };
   } else {
-    return { counter: state.counter + 1 };
+    return state;
   }
 }
 
 const store = redux.createStore(counterReducer);
 
-console.log(store.getState());
 const counterSubscriber = () => {
   console.log(store.getState());
 };
