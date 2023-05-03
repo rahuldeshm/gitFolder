@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { GiEarthAfricaEurope } from "react-icons/gi";
 import {
@@ -12,11 +12,20 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import DataContext from "../../Store/data-context";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function Profile(props) {
   const ctx = useContext(DataContext);
-  const nameRef = useRef();
-  const urlRef = useRef();
+  const [enteredName, setEnteredName] = useState("");
+  const [enteredUrl, setEnteredUrl] = useState("");
+
+  function nameChangeHandler(e) {
+    setEnteredName(e.target.value);
+  }
+  function urlChangeHandler(e) {
+    setEnteredUrl(e.target.value);
+  }
 
   function profileUpdateHandler(e) {
     e.preventDefault();
@@ -26,8 +35,8 @@ function Profile(props) {
         method: "POST",
         body: JSON.stringify({
           idToken: ctx.authorisation.idToken,
-          displayName: nameRef.current.value,
-          photoUrl: urlRef.current.value,
+          displayName: enteredName,
+          photoUrl: enteredUrl,
           returnSecureToken: true,
         }),
         headers: {
@@ -45,6 +54,13 @@ function Profile(props) {
       }
     });
   }
+  function setData() {
+    setEnteredName(ctx.profile.name);
+    setEnteredUrl(ctx.profile.url);
+  }
+
+  useEffect(setData, [ctx.profile]);
+
   return (
     <Container fluid className="p-2">
       {/* <Row style={{ height: "4rem" }}></Row> */}
@@ -76,9 +92,9 @@ function Profile(props) {
               </Col>
               <Col sm={4}>
                 <FormControl
-                  value={ctx.profile.name}
+                  onChange={nameChangeHandler}
+                  value={enteredName}
                   style={{ height: "2rem" }}
-                  ref={nameRef}
                 ></FormControl>
               </Col>
               <Col>
@@ -89,9 +105,9 @@ function Profile(props) {
               </Col>
               <Col sm={4}>
                 <FormControl
-                  value={ctx.profile.url}
+                  onChange={urlChangeHandler}
+                  value={enteredUrl}
                   style={{ height: "2rem" }}
-                  ref={urlRef}
                 ></FormControl>
               </Col>
             </Row>

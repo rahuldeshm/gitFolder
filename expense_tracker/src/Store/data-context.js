@@ -81,6 +81,7 @@ export function DataContextProvider(props) {
           res.json().then((data) => {
             setAuthorisation(null);
             localStorage.removeItem("authorised");
+            alert(data.error.message);
             setLoader(false);
           });
         }
