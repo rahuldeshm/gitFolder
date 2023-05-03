@@ -21,6 +21,7 @@ function ExpenseItem(props) {
   }
   function editHandler() {
     ctx.addExpensetoEdit(props.e);
+    ctx.setEdit(false);
     props.deleteHandler(props.index);
   }
   return (

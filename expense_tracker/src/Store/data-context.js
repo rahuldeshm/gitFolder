@@ -15,14 +15,16 @@ const DataContext = createContext({
   loaderHandler: () => {},
   editExpense: null,
   addExpensetoEdit: () => {},
+  edit: true,
+  setEdit: () => {},
 });
 
 export function DataContextProvider(props) {
+  const [edit, setEdit] = useState(true);
   const [editExpense, setEditExpense] = useState({
     price: "",
     discription: "",
     categary: "",
-    edit: true,
   });
   const [loader, setLoader] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
@@ -100,6 +102,8 @@ export function DataContextProvider(props) {
         loaderHandler: loaderHandler,
         addExpensetoEdit: addExpensetoEdit,
         editExpense: editExpense,
+        edit: edit,
+        setEdit: setEdit,
       }}
     >
       {props.children}

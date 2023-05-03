@@ -20,7 +20,7 @@ function NewExpense(props) {
     e.preventDefault();
     let method;
     let key;
-    if (ctx.editExpense.edit === true) {
+    if (ctx.edit === true) {
       method = "POST";
       key = "";
     } else {
@@ -47,7 +47,9 @@ function NewExpense(props) {
       }).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
-            console.log(method, key, data);
+            if (method === "PUT") {
+              ctx.setEdit(true);
+            }
 
             props.onsubmit(
               enteredPrice,
