@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Col, Row, Button } from "react-bootstrap";
-import DataContext from "../../Store/data-context";
 import { useDispatch } from "react-redux";
 import { editexpenseActions } from "../../Store/editexpenseSlice";
 
 function ExpenseItem(props) {
   const dispatch = useDispatch();
-  const ctx = useContext(DataContext);
   function deleteHandler() {
     fetch(
       `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${props.e.key}.json`,

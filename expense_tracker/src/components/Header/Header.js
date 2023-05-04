@@ -2,24 +2,24 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../images/lightning_sewer.webp";
 import { Container, Nav, Navbar, Image, Button } from "react-bootstrap";
-
+import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../Store/authSlice";
-
+import { themeActions } from "../../Store/themeSlice";
+import { expenseActions } from "../../Store/expenseSlice";
 function Header() {
+  const mod = useSelector((state) => state.theme.dark);
+  const primium = useSelector((state) => state.expense.primium);
   const dispatch = useDispatch();
   const total = useSelector((state) => state.expense.total);
   const authorised = useSelector((state) => state.auth.authorised);
-
-  const premium = total < 10000 ? total : "Activate Premium";
-  const variant = total < 10000 ? "primary" : "danger";
 
   function logoutHandler() {
     dispatch(authActions.logout());
   }
   return (
     <Navbar
-      bg="dark"
+      bg={mod ? "primary" : "dark"}
       variant="dark"
       style={{ zIndex: "20", position: "fixed", width: "100%" }}
     >
@@ -31,18 +31,33 @@ function Header() {
       </Container>
       <Container>
         <Nav>
-          <NavLink to="/" style={{ margin: "5px" }}>
-            <Button size="sm">Home </Button>
-          </NavLink>
           {authorised && (
-            <NavLink to="/expenses" style={{ margin: "5px" }}>
+            <NavLink to="/welcome" style={{ margin: "5px" }}>
               {" "}
-              <Button size="sm">Expense</Button>
+              <Button variant={mod ? "dark" : "primary"} size="sm">
+                Profile
+              </Button>
             </NavLink>
           )}
           {authorised && (
-            <Button size="sm" variant={variant} style={{ margin: "5px" }}>
-              {premium}
+            <NavLink to="/expenses" style={{ margin: "5px" }}>
+              {" "}
+              <Button variant={mod ? "dark" : "primary"} size="sm">
+                Expense
+              </Button>
+            </NavLink>
+          )}
+
+          {authorised && total > 10000 && (
+            <Button
+              size="sm"
+              variant="success"
+              style={{ margin: "5px", width: "8rem" }}
+              onClick={() => {
+                dispatch(expenseActions.primiumHandler());
+              }}
+            >
+              Activate Primium
             </Button>
           )}
 
@@ -57,6 +72,20 @@ function Header() {
                 logout
               </Button>
             </a>
+          )}
+          {authorised && primium && (
+            <Button
+              size="sm"
+              onClick={() => dispatch(themeActions.setTheme())}
+              variant={mod ? "primary" : "dark"}
+              style={{ margin: "5px" }}
+            >
+              {mod ? (
+                <BsFillSunFill style={{ height: "1rem" }} />
+              ) : (
+                <BsFillMoonStarsFill style={{ height: "1rem" }} />
+              )}
+            </Button>
           )}
         </Nav>
       </Container>

@@ -4,12 +4,15 @@ import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import DataContext from "../../Store/data-context";
+import { useSelector } from "react-redux";
 
 function Welcome() {
   const ctx = useContext(DataContext);
   const [update, setUpdate] = useState(true);
+  const mod = useSelector((state) => state.theme.dark);
   let completed = ctx.completedProfile ? "green" : "#ccc";
-
+  const bgcolor = mod ? "white" : "#0b3738";
+  const acolor = mod ? "#0b3738" : "white";
   function toggleHandler() {
     setUpdate(false);
   }
@@ -43,7 +46,7 @@ function Welcome() {
   }
 
   return (
-    <Container fluid>
+    <Container fluid style={{ backgroundColor: bgcolor, color: acolor }}>
       <Row style={{ height: "4rem" }}></Row>
       <Row
         className="p-1"
@@ -90,6 +93,7 @@ function Welcome() {
           <Profile />
         </Route>
       </Switch>
+      <Row style={{ height: "34rem", backgroundColor: bgcolor }}></Row>
     </Container>
   );
 }

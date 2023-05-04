@@ -8,11 +8,12 @@ import {
   FormSelect,
   Row,
 } from "react-bootstrap";
-import DataContext from "../../Store/data-context";
 import { useDispatch, useSelector } from "react-redux";
 import { editexpenseActions } from "../../Store/editexpenseSlice";
+import Download from "./Download";
 
 function NewExpense(props) {
+  const primium = useSelector((state) => state.expense.primium);
   const dispatch = useDispatch();
   const edit = useSelector((state) => state.editexpense.edit);
   const editExpense = useSelector((state) => state.editexpense.editExpense);
@@ -51,11 +52,17 @@ function NewExpense(props) {
       }).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
+            let finkey;
+            if (method !== "PUT") {
+              finkey = data.name;
+            } else {
+              finkey = key;
+            }
             props.onsubmit(
               enteredPrice,
               enteredDiscription,
               enteredCategary,
-              editExpense.key
+              finkey
             );
             if (method === "PUT") {
               dispatch(
@@ -149,6 +156,7 @@ function NewExpense(props) {
           </Button>
         </Form>
       )}
+      {primium && <Download />}
     </Container>
   );
 }

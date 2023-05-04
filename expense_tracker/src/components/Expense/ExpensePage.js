@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Expenses from "./Expenses";
 import NewExpense from "./NewExpense";
@@ -6,12 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../../Store/expenseSlice";
 
 function ExpensePage() {
+  const mod = useSelector((state) => state.theme.dark);
   const list = useSelector((state) => state.expense.list);
   const dispatch = useDispatch();
-  function onAddHandler(price, discription, categary, key) {
-    dispatch(expenseActions.addList({ price, discription, categary, key }));
-  }
+  const onAddHandler = useCallback(
+    (price, discription, categary, key) => {
+      dispatch(expenseActions.addList({ price, discription, categary, key }));
+    },
+    [dispatch]
+  );
+  const bgcolor = mod ? "white" : "#0b3738";
+
   function fetchList() {
+    dispatch(expenseActions.deleteWholeList());
     fetch("https://expnesetracker-default-rtdb.firebaseio.com/expenses.json", {
       method: "GET",
       headers: {
@@ -21,13 +28,15 @@ function ExpensePage() {
       if (res.ok) {
         res.json().then((data) => {
           const keys = Object.keys(data);
-          let arr = [];
           let total = 0;
           for (let i of keys) {
             total = total + parseInt(data[i].price);
-            const datawithkey = { ...data[i], key: i };
-            arr.push(datawithkey);
-            dispatch(expenseActions.addList(datawithkey));
+            onAddHandler(
+              data[i].price,
+              data[i].discription,
+              data[i].categary,
+              i
+            );
           }
         });
       } else {
@@ -35,14 +44,14 @@ function ExpensePage() {
       }
     });
   }
-  useEffect(fetchList, [dispatch]);
+  useEffect(fetchList, [onAddHandler]);
 
   function deleteHandler(index) {
     dispatch(expenseActions.deleteList(index));
   }
 
   return (
-    <Container fluid style={{ color: "white", backgroundColor: "#0b3738" }}>
+    <Container fluid style={{ color: "white", backgroundColor: bgcolor }}>
       <Row style={{ height: "4rem" }}></Row>
       <Row>
         <Col>

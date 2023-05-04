@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = { list: [], total: 0 };
+const initialState = { list: [], total: 0, primium: false };
 const expenseSlice = createSlice({
   name: "expense",
   initialState,
@@ -14,6 +14,13 @@ const expenseSlice = createSlice({
       li.splice(action.payload, 1);
       state.list = li;
       state.total = state.total - sub;
+    },
+    deleteWholeList(state) {
+      state.list = [];
+      state.total = 0;
+    },
+    primiumHandler(state) {
+      state.primium = !state.primium;
     },
   },
 });
