@@ -15,6 +15,7 @@ function Welcome() {
   }
 
   function verifyEmailHandler() {
+    ctx.loaderHandler();
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
       {
@@ -29,8 +30,15 @@ function Welcome() {
       }
     ).then((res) => {
       if (res.ok) {
-        res.json().then((data) => console.log(data));
-      } else res.json().then((data) => alert(data.error.message));
+        res.json().then((data) => {
+          ctx.loaderHandler();
+          alert("Verification Email sent.");
+        });
+      } else
+        res.json().then((data) => {
+          ctx.loaderHandler();
+          alert(data.error.message);
+        });
     });
   }
 

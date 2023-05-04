@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import React, { useState } from "react";
 import {
   Button,
@@ -9,9 +9,13 @@ import {
   Row,
 } from "react-bootstrap";
 import DataContext from "../../Store/data-context";
+import { useDispatch, useSelector } from "react-redux";
+import { editexpenseActions } from "../../Store/editexpenseSlice";
 
 function NewExpense(props) {
-  const ctx = useContext(DataContext);
+  const dispatch = useDispatch();
+  const edit = useSelector((state) => state.editexpense.edit);
+  const editExpense = useSelector((state) => state.editexpense.editExpense);
   const [cancel, setCancel] = useState(false);
   const [enteredPrice, setEnteredPrice] = useState("");
   const [enteredDiscription, setEnteredDiscription] = useState("");
@@ -20,11 +24,11 @@ function NewExpense(props) {
     e.preventDefault();
     let method;
     let key;
-    if (ctx.edit === true) {
+    if (edit === true) {
       method = "POST";
       key = "";
     } else {
-      key = ctx.editExpense.key;
+      key = editExpense.key;
       method = "PUT";
     }
     let url = `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${key}.json`;
@@ -47,16 +51,21 @@ function NewExpense(props) {
       }).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
-            if (method === "PUT") {
-              ctx.setEdit(true);
-            }
-
             props.onsubmit(
               enteredPrice,
               enteredDiscription,
               enteredCategary,
-              ctx.editExpense.key
+              editExpense.key
             );
+            if (method === "PUT") {
+              dispatch(
+                editexpenseActions.setEditExpense({
+                  price: "",
+                  discription: "",
+                  categary: "",
+                })
+              );
+            }
             setEnteredCategary("");
             setEnteredDiscription("");
             setEnteredPrice("");
@@ -73,12 +82,12 @@ function NewExpense(props) {
   }
 
   function editData() {
-    setEnteredCategary(ctx.editExpense.categary);
-    setEnteredDiscription(ctx.editExpense.discription);
-    setEnteredPrice(ctx.editExpense.price);
+    setEnteredCategary(editExpense.categary);
+    setEnteredDiscription(editExpense.discription);
+    setEnteredPrice(editExpense.price);
   }
 
-  useEffect(editData, [ctx.editExpense]);
+  useEffect(editData, [editExpense]);
 
   function priceChangeHandler(e) {
     setEnteredPrice(e.target.value);

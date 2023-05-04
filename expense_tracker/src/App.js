@@ -8,9 +8,11 @@ import DataContext from "./Store/data-context";
 import ForgotPass from "./components/Auth/ForgotPass";
 import Loader from "./components/UI/Loader";
 import ExpensePage from "./components/Expense/ExpensePage";
+import { useSelector } from "react-redux";
 
 function App() {
   const ctx = useContext(DataContext);
+  const authorised = useSelector((state) => state.auth.authorised);
 
   return (
     <>
@@ -18,7 +20,7 @@ function App() {
       {ctx.loader && <Loader />}
       <Switch>
         <Route path="/" exact>
-          <Redirect to={ctx.authorised ? "welcome" : "auth"} />
+          <Redirect to={authorised ? "welcome" : "auth"} />
         </Route>
         <Route path="/auth">
           <Auth />
@@ -26,12 +28,12 @@ function App() {
         <Route path="/forgot-password">
           <ForgotPass />
         </Route>
-        {ctx.authorised && (
+        {authorised && (
           <Route path="/welcome">
             <Welcome />
           </Route>
         )}
-        {ctx.authorised && (
+        {authorised && (
           <Route path="/expenses">
             <ExpensePage />
           </Route>

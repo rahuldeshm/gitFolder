@@ -1,14 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../images/lightning_sewer.webp";
 import { Container, Nav, Navbar, Image, Button } from "react-bootstrap";
-import DataContext from "../../Store/data-context";
 
-function Header(props) {
-  const ctx = useContext(DataContext);
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../Store/authSlice";
+
+function Header() {
+  const dispatch = useDispatch();
+  const total = useSelector((state) => state.expense.total);
+  const authorised = useSelector((state) => state.auth.authorised);
+
+  const premium = total < 10000 ? total : "Activate Premium";
+  const variant = total < 10000 ? "primary" : "danger";
+
   function logoutHandler() {
-    ctx.authorisationHandler(null);
-    localStorage.removeItem("authorised");
+    dispatch(authActions.logout());
   }
   return (
     <Navbar
@@ -27,17 +34,19 @@ function Header(props) {
           <NavLink to="/" style={{ margin: "5px" }}>
             <Button size="sm">Home </Button>
           </NavLink>
-          {ctx.authorised && (
+          {authorised && (
             <NavLink to="/expenses" style={{ margin: "5px" }}>
               {" "}
               <Button size="sm">Expense</Button>
             </NavLink>
           )}
-          <NavLink to="/" style={{ margin: "5px" }}>
-            {" "}
-            <Button size="sm">AboutUs</Button>
-          </NavLink>
-          {ctx.authorised && (
+          {authorised && (
+            <Button size="sm" variant={variant} style={{ margin: "5px" }}>
+              {premium}
+            </Button>
+          )}
+
+          {authorised && (
             <a href="http://localhost:3000/">
               <Button
                 style={{ margin: "5px" }}

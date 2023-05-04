@@ -6,8 +6,11 @@ import { Form, FormControl, InputGroup } from "react-bootstrap";
 import { useRef } from "react";
 import { useContext } from "react";
 import DataContext from "../../Store/data-context";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../Store/authSlice";
 
 function Login() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const ctx = useContext(DataContext);
   const emailRef = useRef();
@@ -35,7 +38,7 @@ function Login() {
     }).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
-          ctx.authorisationHandler(data);
+          dispatch(authActions.login(data));
           localStorage.setItem("authorised", JSON.stringify(data));
           history.replace("/welcome");
           ctx.loaderHandler();

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import logo from "../../images/lightning_sewer.webp";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {

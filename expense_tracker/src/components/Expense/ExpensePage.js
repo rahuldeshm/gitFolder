@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Expenses from "./Expenses";
 import NewExpense from "./NewExpense";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { expenseActions } from "../../Store/expenseSlice";
 
 function ExpensePage() {
-  const [list, setList] = useState([]);
+  const list = useSelector((state) => state.expense.list);
+  const dispatch = useDispatch();
   function onAddHandler(price, discription, categary, key) {
-    setList((list) => [...list, { price, discription, categary, key }]);
+    dispatch(expenseActions.addList({ price, discription, categary, key }));
   }
   function fetchList() {
     fetch("https://expnesetracker-default-rtdb.firebaseio.com/expenses.json", {
@@ -20,23 +22,23 @@ function ExpensePage() {
         res.json().then((data) => {
           const keys = Object.keys(data);
           let arr = [];
+          let total = 0;
           for (let i of keys) {
+            total = total + parseInt(data[i].price);
             const datawithkey = { ...data[i], key: i };
             arr.push(datawithkey);
+            dispatch(expenseActions.addList(datawithkey));
           }
-          setList(arr);
         });
       } else {
         res.json().then((data) => alert(data.error.message));
       }
     });
   }
-  useEffect(fetchList, []);
+  useEffect(fetchList, [dispatch]);
 
   function deleteHandler(index) {
-    let li = [...list];
-    li.splice(index, 1);
-    setList(li);
+    dispatch(expenseActions.deleteList(index));
   }
 
   return (

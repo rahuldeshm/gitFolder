@@ -7,14 +7,18 @@ import "../node_modules/react-bootstrap/dist/react-bootstrap.min.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import reportWebVitals from "./reportWebVitals";
 import { DataContextProvider } from "./Store/data-context";
+import { Provider } from "react-redux";
+import store from "./Store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <DataContextProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </DataContextProvider>
+  <Provider store={store}>
+    <DataContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </DataContextProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

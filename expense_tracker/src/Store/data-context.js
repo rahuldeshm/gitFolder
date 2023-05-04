@@ -1,51 +1,33 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { createContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "./authSlice";
 
-const login = JSON.parse(localStorage.getItem("authorised"));
 const DataContext = createContext({
-  authorised: false,
-  authorisation: "",
-  authorisationHandler: () => {},
   completedProfile: false,
   profile: {},
   emailVerified: false,
   profileHandler: () => {},
   loader: false,
   loaderHandler: () => {},
-  editExpense: null,
-  addExpensetoEdit: () => {},
-  edit: true,
-  setEdit: () => {},
 });
 
 export function DataContextProvider(props) {
-  const [edit, setEdit] = useState(true);
-  const [editExpense, setEditExpense] = useState({
-    price: "",
-    discription: "",
-    categary: "",
-  });
+  const dispatch = useDispatch();
+
+  const authorised = useSelector((state) => state.auth.authorised);
+  const authorisation = useSelector((state) => state.auth.authorisation);
   const [loader, setLoader] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [profile, setprofileData] = useState({ name: "", url: "" });
   const [completedProfile, setCompletedProfile] = useState(false);
-  const [authorisation, setAuthorisation] = useState(login);
-  let authorised = !!authorisation;
-  function authorisationHandler(item) {
-    setAuthorisation(item);
-  }
 
   function profileHandler() {
     setCompletedProfile(true);
   }
   function loaderHandler() {
     setLoader((loader) => !loader);
-  }
-
-  function addExpensetoEdit(item) {
-    setEditExpense(item);
-    console.log(editExpense);
   }
 
   function fetchDataFunction() {
@@ -79,10 +61,9 @@ export function DataContextProvider(props) {
           });
         } else {
           res.json().then((data) => {
-            setAuthorisation(null);
-            localStorage.removeItem("authorised");
-            alert(data.error.message);
+            dispatch(authActions.logout());
             setLoader(false);
+            alert(data.error.message);
           });
         }
       });
@@ -92,19 +73,12 @@ export function DataContextProvider(props) {
   return (
     <DataContext.Provider
       value={{
-        authorisation: authorisation,
-        authorised: authorised,
-        authorisationHandler: authorisationHandler,
         completedProfile: completedProfile,
         profile: profile,
         emailVerified: emailVerified,
         profileHandler: profileHandler,
         loader: loader,
         loaderHandler: loaderHandler,
-        addExpensetoEdit: addExpensetoEdit,
-        editExpense: editExpense,
-        edit: edit,
-        setEdit: setEdit,
       }}
     >
       {props.children}

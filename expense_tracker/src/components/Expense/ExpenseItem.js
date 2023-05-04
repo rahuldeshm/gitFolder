@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
 import { Col, Row, Button } from "react-bootstrap";
 import DataContext from "../../Store/data-context";
+import { useDispatch } from "react-redux";
+import { editexpenseActions } from "../../Store/editexpenseSlice";
 
 function ExpenseItem(props) {
+  const dispatch = useDispatch();
   const ctx = useContext(DataContext);
   function deleteHandler() {
     fetch(
@@ -16,12 +19,12 @@ function ExpenseItem(props) {
     ).then((res) => {
       if (res.ok) {
         props.deleteHandler(props.index);
+        alert(`${props.e.discription} Deleted sussfully`);
       }
     });
   }
   function editHandler() {
-    ctx.addExpensetoEdit(props.e);
-    ctx.setEdit(false);
+    dispatch(editexpenseActions.setEditExpense(props.e));
     props.deleteHandler(props.index);
   }
   return (

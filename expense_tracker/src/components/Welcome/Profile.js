@@ -29,6 +29,7 @@ function Profile(props) {
 
   function profileUpdateHandler(e) {
     e.preventDefault();
+    ctx.loaderHandler();
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
       {
@@ -46,11 +47,17 @@ function Profile(props) {
     ).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
-          console.log(data);
+          ctx.loaderHandler();
+          alert(
+            "Profile updeted successfully, if you want to edit the profile then edit and again submit the data"
+          );
           ctx.profileHandler();
         });
       } else {
-        res.json().then((data) => alert(data.error.message));
+        res.json().then((data) => {
+          ctx.loaderHandler();
+          alert(data.error.message);
+        });
       }
     });
   }
