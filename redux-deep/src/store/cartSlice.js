@@ -10,6 +10,11 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    fetchedCart(state, action) {
+      state.cartItems = action.payload.cartItems;
+      state.cartNames = action.payload.cartNames;
+      state.noOfCart = action.payload.noOfCart;
+    },
     addToCart(state, action) {
       const ind = state.cartNames.indexOf(action.payload.title);
       let cartitemstoedit = [...state.cartItems];

@@ -1,6 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { showCart: false, showLoading: false };
+const initialState = {
+  showCart: false,
+  loader: {
+    loader: false,
+    status: "",
+    title: "",
+    message: "",
+  },
+};
 
 const uiSlice = createSlice({
   name: "ui",
@@ -8,6 +16,9 @@ const uiSlice = createSlice({
   reducers: {
     setShowCart(state) {
       state.showCart = !state.showCart;
+    },
+    setLoader(state, action) {
+      state.loader = action.payload;
     },
   },
 });
