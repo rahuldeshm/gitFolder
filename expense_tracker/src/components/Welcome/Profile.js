@@ -14,8 +14,10 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import DataContext from "../../Store/data-context";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function Profile(props) {
+  const authorisation = useSelector((state) => state.auth.authorisation);
   const ctx = useContext(DataContext);
   const [enteredName, setEnteredName] = useState("");
   const [enteredUrl, setEnteredUrl] = useState("");
@@ -35,7 +37,7 @@ function Profile(props) {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: ctx.authorisation.idToken,
+          idToken: authorisation.idToken,
           displayName: enteredName,
           photoUrl: enteredUrl,
           returnSecureToken: true,

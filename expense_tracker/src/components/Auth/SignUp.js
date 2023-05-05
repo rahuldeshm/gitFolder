@@ -3,8 +3,11 @@ import { useRef } from "react";
 import { FloatingLabel, Form, FormControl, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import DataContext from "../../Store/data-context";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../Store/authSlice";
 
 function AuthForm(props) {
+  const dispatch = useDispatch();
   const ctx = useContext(DataContext);
   const history = useHistory();
   const emailRef = useRef();
@@ -30,9 +33,8 @@ function AuthForm(props) {
       }).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
-            console.log(data);
-            ctx.authorisationHandler(data);
-            localStorage.setItem("authorised", data);
+            dispatch(authActions.login(data));
+            localStorage.setItem("authorised", JSON.stringify(data));
             history.push("/welcome");
             ctx.loaderHandler();
           });

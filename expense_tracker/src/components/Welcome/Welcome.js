@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 function Welcome() {
   const ctx = useContext(DataContext);
+  const authorisation = useSelector((state) => state.auth.authorisation);
   const [update, setUpdate] = useState(true);
   const mod = useSelector((state) => state.theme.dark);
   let completed = ctx.completedProfile ? "green" : "#ccc";
@@ -25,7 +26,7 @@ function Welcome() {
         method: "POST",
         body: JSON.stringify({
           requestType: "VERIFY_EMAIL",
-          idToken: ctx.authorisation.idToken,
+          idToken: authorisation.idToken,
         }),
         headers: {
           "Content-Type": "application/json",
