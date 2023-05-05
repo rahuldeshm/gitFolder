@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  showCart: false,
   cartItems: [],
   cartNames: [],
   noOfCart: 0,
@@ -11,9 +10,6 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    setShowCart(state) {
-      state.showCart = !state.showCart;
-    },
     addToCart(state, action) {
       const ind = state.cartNames.indexOf(action.payload.title);
       let cartitemstoedit = [...state.cartItems];
