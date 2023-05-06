@@ -1,13 +1,14 @@
 import React from "react";
 import { Col, Row, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editexpenseActions } from "../../Store/editexpenseSlice";
 
 function ExpenseItem(props) {
+  const emailString = useSelector((state) => state.auth.emailString);
   const dispatch = useDispatch();
   function deleteHandler() {
     fetch(
-      `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${props.e.key}.json`,
+      `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${emailString}/${props.e.key}.json`,
       {
         method: "DELETE",
         headers: {

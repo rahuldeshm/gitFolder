@@ -17,6 +17,8 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function Profile(props) {
+  const pname = useSelector((state) => state.profile.name);
+  const url = useSelector((state) => state.profile.url);
   const authorisation = useSelector((state) => state.auth.authorisation);
   const ctx = useContext(DataContext);
   const [enteredName, setEnteredName] = useState("");
@@ -50,10 +52,10 @@ function Profile(props) {
       if (res.ok) {
         res.json().then((data) => {
           ctx.loaderHandler();
+          console.log(data);
           alert(
             "Profile updeted successfully, if you want to edit the profile then edit and again submit the data"
           );
-          ctx.profileHandler();
         });
       } else {
         res.json().then((data) => {
@@ -64,11 +66,11 @@ function Profile(props) {
     });
   }
   function setData() {
-    setEnteredName(ctx.profile.name);
-    setEnteredUrl(ctx.profile.url);
+    setEnteredName(pname);
+    setEnteredUrl(url);
   }
 
-  useEffect(setData, [ctx.profile]);
+  useEffect(setData, [pname, url]);
 
   return (
     <Container fluid className="p-2">

@@ -8,10 +8,12 @@ import { useSelector } from "react-redux";
 
 function Welcome() {
   const ctx = useContext(DataContext);
+  const emailVerified = useSelector((state) => state.profile.emailVerified);
+  const profile = !!useSelector((state) => state.profile.name);
   const authorisation = useSelector((state) => state.auth.authorisation);
   const [update, setUpdate] = useState(true);
   const mod = useSelector((state) => state.theme.dark);
-  let completed = ctx.completedProfile ? "green" : "#ccc";
+  let completed = profile ? "green" : "#ccc";
   const bgcolor = mod ? "white" : "#0b3738";
   const acolor = mod ? "#0b3738" : "white";
   function toggleHandler() {
@@ -83,9 +85,9 @@ function Welcome() {
         <Col sm={2}>
           <Button
             onClick={verifyEmailHandler}
-            variant={ctx.emailVerified ? "success" : "danger"}
+            variant={emailVerified ? "success" : "danger"}
           >
-            {ctx.emailVerified ? "Email Verified" : "Verify email"}
+            {emailVerified ? "Email Verified" : "Verify email"}
           </Button>
         </Col>
       </Row>

@@ -3,6 +3,7 @@ import authSlice from "./authSlice";
 import editexpenseSlice from "./editexpenseSlice";
 import expenseSlice from "./expenseSlice";
 import themeSlice from "./themeSlice";
+import profileSlice from "./profileSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     editexpense: editexpenseSlice,
     expense: expenseSlice,
     theme: themeSlice,
+    profile: profileSlice,
   },
 });
 

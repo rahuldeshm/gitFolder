@@ -3,12 +3,9 @@ import { useState, useEffect } from "react";
 import { createContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./authSlice";
+import { profileActions } from "./profileSlice";
 
 const DataContext = createContext({
-  completedProfile: false,
-  profile: {},
-  emailVerified: false,
-  profileHandler: () => {},
   loader: false,
   loaderHandler: () => {},
 });
@@ -19,13 +16,7 @@ export function DataContextProvider(props) {
   const authorised = useSelector((state) => state.auth.authorised);
   const authorisation = useSelector((state) => state.auth.authorisation);
   const [loader, setLoader] = useState(false);
-  const [emailVerified, setEmailVerified] = useState(false);
-  const [profile, setprofileData] = useState({ name: "", url: "" });
-  const [completedProfile, setCompletedProfile] = useState(false);
 
-  function profileHandler() {
-    setCompletedProfile(true);
-  }
   function loaderHandler() {
     setLoader((loader) => !loader);
   }
@@ -48,15 +39,15 @@ export function DataContextProvider(props) {
         if (res.ok) {
           res.json().then((data) => {
             if (data.users[0].displayName !== undefined) {
-              setCompletedProfile(true);
-              setprofileData({
-                name: data.users[0].displayName,
-                url: data.users[0].photoUrl,
-              });
+              dispatch(
+                profileActions.setFetchedData({
+                  name: data.users[0].displayName,
+                  url: data.users[0].photoUrl,
+                  emailVerified: data.users[0].emailVerified,
+                })
+              );
             }
-            if (data.users[0].emailVerified === true) {
-              setEmailVerified(true);
-            }
+
             setLoader(false);
           });
         } else {
@@ -73,10 +64,6 @@ export function DataContextProvider(props) {
   return (
     <DataContext.Provider
       value={{
-        completedProfile: completedProfile,
-        profile: profile,
-        emailVerified: emailVerified,
-        profileHandler: profileHandler,
         loader: loader,
         loaderHandler: loaderHandler,
       }}

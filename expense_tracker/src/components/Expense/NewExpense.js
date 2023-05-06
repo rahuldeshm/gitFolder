@@ -13,6 +13,7 @@ import { editexpenseActions } from "../../Store/editexpenseSlice";
 import Download from "./Download";
 
 function NewExpense(props) {
+  const emailString = useSelector((state) => state.auth.emailString);
   const primium = useSelector((state) => state.expense.primium);
   const dispatch = useDispatch();
   const edit = useSelector((state) => state.editexpense.edit);
@@ -32,7 +33,7 @@ function NewExpense(props) {
       key = editExpense.key;
       method = "PUT";
     }
-    let url = `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${key}.json`;
+    let url = `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${emailString}/${key}.json`;
 
     if (
       enteredDiscription !== "" &&

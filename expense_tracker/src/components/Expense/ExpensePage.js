@@ -1,11 +1,14 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Expenses from "./Expenses";
 import NewExpense from "./NewExpense";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../../Store/expenseSlice";
+import DataContext from "./../../Store/data-context";
 
 function ExpensePage() {
+  const ctx = useContext(DataContext);
+  const emailString = useSelector((state) => state.auth.emailString);
   const mod = useSelector((state) => state.theme.dark);
   const list = useSelector((state) => state.expense.list);
   const dispatch = useDispatch();
@@ -19,12 +22,16 @@ function ExpensePage() {
 
   function fetchList() {
     dispatch(expenseActions.deleteWholeList());
-    fetch("https://expnesetracker-default-rtdb.firebaseio.com/expenses.json", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
+    ctx.loaderHandler();
+    fetch(
+      `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${emailString}.json`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
           const keys = Object.keys(data);
@@ -39,12 +46,16 @@ function ExpensePage() {
             );
           }
         });
+        ctx.loaderHandler();
       } else {
-        res.json().then((data) => alert(data.error.message));
+        res.json().then((data) => {
+          ctx.loaderHandler();
+          alert(data.error.message);
+        });
       }
     });
   }
-  useEffect(fetchList, [onAddHandler]);
+  useEffect(fetchList, [onAddHandler, dispatch, emailString]);
 
   function deleteHandler(index) {
     dispatch(expenseActions.deleteList(index));
