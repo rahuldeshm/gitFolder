@@ -56,7 +56,7 @@ function Welcome() {
         style={{ height: "auto", borderBottom: "2px solid black" }}
       >
         <Col sm={5}>
-          <h5>Welcome to Expense tracer</h5>
+          <h5>Welcome to Expense tracker</h5>
         </Col>
         <Col
           sm={5}

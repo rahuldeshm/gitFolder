@@ -27,7 +27,7 @@ function Header() {
         <Image src={logo} roundedCircle style={{ height: "2rem" }} />
       </Container>
       <Container>
-        <Navbar.Brand>MyWebLink</Navbar.Brand>
+        <Navbar.Brand>Expense Tracker app</Navbar.Brand>
       </Container>
       <Container>
         <Nav>

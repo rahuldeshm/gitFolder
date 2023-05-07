@@ -50,11 +50,13 @@ function ExpensePage() {
       } else {
         res.json().then((data) => {
           ctx.loaderHandler();
+          console.log("loader handler in else condition");
           alert(data.error.message);
         });
       }
     });
   }
+
   useEffect(fetchList, [onAddHandler, dispatch, emailString]);
 
   function deleteHandler(index) {

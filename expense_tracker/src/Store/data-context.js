@@ -23,7 +23,7 @@ export function DataContextProvider(props) {
 
   function fetchDataFunction() {
     if (authorised) {
-      setLoader(true);
+      loaderHandler();
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
         {
@@ -48,7 +48,7 @@ export function DataContextProvider(props) {
               );
             }
 
-            setLoader(false);
+            loaderHandler();
           });
         } else {
           res.json().then((data) => {
@@ -60,7 +60,7 @@ export function DataContextProvider(props) {
       });
     }
   }
-  useEffect(fetchDataFunction, [authorisation, authorised]);
+  useEffect(fetchDataFunction, [authorisation, authorised, dispatch]);
   return (
     <DataContext.Provider
       value={{

@@ -73,7 +73,7 @@ function ForgotPass() {
               style={{ height: "4rem", width: "7rem" }}
             />
             <h3 className="p-3" style={{ borderBottom: "2px solid black" }}>
-              MyWebLink
+              Expense tracker app
             </h3>
           </Row>
           <Form onSubmit={submitFormHandler}>
