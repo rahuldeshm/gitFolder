@@ -14,7 +14,12 @@ function Download() {
     <a href={url} download={"text.csv"}>
       <Button
         variant="success"
-        style={{ width: "100%", height: "4rem", marginTop: "1rem" }}
+        style={{
+          width: "108%",
+          height: "4rem",
+          marginTop: "1rem",
+          marginLeft: "-0.7rem",
+        }}
       >
         {`Download Expenses $${total}`}
       </Button>

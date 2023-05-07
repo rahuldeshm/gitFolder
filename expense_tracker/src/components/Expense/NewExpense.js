@@ -143,7 +143,10 @@ function NewExpense(props) {
           >
             <option>food</option>
             <option>petrol</option>
-            <option>salary</option>
+            <option>utensils</option>
+            <option>books</option>
+            <option>cloths</option>
+            <option>other</option>
           </FormSelect>
           <Button className="mt-3" onClick={addExpenseHandler}>
             Add Expense

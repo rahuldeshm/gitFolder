@@ -71,13 +71,13 @@ function Welcome() {
             className="m-1"
             style={{ fontSize: "0.8rem", fontStyle: "italic" }}
           >
-            {ctx.completedProfile
+            {profile
               ? "Your Profile is 100% complete"
               : update
               ? "Your Profile is Incomplete"
               : "Your profile is 64% completed, A complete profile has higher chances of landing a job "}
             <Link onClick={toggleHandler} to="/welcome/updateprofile">
-              {ctx.completedProfile ? "Update Profile" : "Complete Now"}
+              {profile ? "Update Profile" : "Complete Now"}
             </Link>
             .
           </p>

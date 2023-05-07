@@ -29,7 +29,7 @@ function Auth(props) {
         <Col sm={12}>
           <Row className="p-1">
             <h3 className="p-3" style={{ borderBottom: "2px solid black" }}>
-              {islogin ? "Sign In" : "Sign Up"}
+              {islogin ? "log in" : "Sign Up"}
             </h3>
           </Row>
           <Row className="p-2">{islogin ? <Login /> : <SignUp />}</Row>
@@ -47,7 +47,9 @@ function Auth(props) {
       >
         <Col sm={12}>
           <Row className="p-3" onClick={logintosignupHandler}>
-            <h5>{islogin ? "New Here? Sign up." : "Have an account? Login"}</h5>
+            <h5>
+              {islogin ? "New Here? Sign up." : "Have an account? Log in"}
+            </h5>
           </Row>
         </Col>
       </Container>

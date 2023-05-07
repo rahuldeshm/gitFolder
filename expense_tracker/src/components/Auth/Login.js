@@ -107,7 +107,7 @@ function Login() {
           marginBottom: "1rem",
         }}
       >
-        Sign in
+        Log in
       </button>
       <Link to="/forgot-password"> Forgot password</Link>
     </Form>
