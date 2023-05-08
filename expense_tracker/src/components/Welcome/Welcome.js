@@ -50,7 +50,6 @@ function Welcome() {
 
   return (
     <Container fluid style={{ backgroundColor: bgcolor, color: acolor }}>
-      <Row style={{ height: "4rem" }}></Row>
       <Row
         className="p-1"
         style={{ height: "auto", borderBottom: "2px solid black" }}

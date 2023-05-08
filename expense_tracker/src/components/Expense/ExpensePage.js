@@ -50,7 +50,7 @@ function ExpensePage() {
       } else {
         res.json().then((data) => {
           ctx.loaderHandler();
-          console.log("loader handler in else condition");
+
           alert(data.error.message);
         });
       }
@@ -65,7 +65,6 @@ function ExpensePage() {
 
   return (
     <Container fluid style={{ color: "white", backgroundColor: bgcolor }}>
-      <Row style={{ height: "4rem" }}></Row>
       <Row>
         <Col>
           <NewExpense onsubmit={onAddHandler} />

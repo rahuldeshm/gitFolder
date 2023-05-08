@@ -1,0 +1,17 @@
+.row {
+  border: 1px solid #ccc;
+  background-color: rgb(43, 55, 55);
+  text-align: center;
+  height: 25rem;
+}
+.toggle {
+  justify-content: center;
+  border: 1px solid #ccc;
+  background-color: rgb(43, 55, 55);
+  text-align: center;
+  height: 3rem;
+}
+.button {
+  color: white;
+  background-color: rgb(17, 10, 14);
+}

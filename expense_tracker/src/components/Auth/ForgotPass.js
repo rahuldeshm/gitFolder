@@ -54,7 +54,7 @@ function ForgotPass() {
         justifyContent: "center",
       }}
     >
-      <Container style={{ height: "8rem" }}></Container>
+      <Container style={{ height: "2rem" }}></Container>
       <Container
         style={{
           textAlign: "center",

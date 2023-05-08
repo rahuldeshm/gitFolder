@@ -16,7 +16,7 @@ function Auth(props) {
         justifyContent: "center",
       }}
     >
-      <Container style={{ height: "8rem" }}></Container>
+      <Container style={{ height: "3rem" }}></Container>
       <Container
         style={{
           borderRadius: "1rem",

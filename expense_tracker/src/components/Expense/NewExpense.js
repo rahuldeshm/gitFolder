@@ -107,7 +107,7 @@ function NewExpense(props) {
     setEnteredCategary(e.target.value);
   }
   return (
-    <Container className="p-5" style={{ height: "36rem", textAlign: "center" }}>
+    <Container className="p-5" style={{ height: "auto", textAlign: "center" }}>
       <Row>
         {cancel && <h5>Add Expenses</h5>}
         {!cancel && (

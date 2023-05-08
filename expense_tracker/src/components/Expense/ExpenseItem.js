@@ -28,7 +28,7 @@ function ExpenseItem(props) {
   }
   return (
     <Row
-      className="p-2 mt-4"
+      className="p-2 mt-4 mb-4"
       style={{
         borderRadius: "1rem",
         backgroundColor: "#17241c",

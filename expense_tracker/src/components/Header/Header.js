@@ -1,7 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../images/lightning_sewer.webp";
-import { Container, Nav, Navbar, Image, Button } from "react-bootstrap";
+import {
+  Container,
+  Nav,
+  Navbar,
+  Image,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../Store/authSlice";
@@ -18,18 +26,27 @@ function Header() {
     dispatch(authActions.logout());
   }
   return (
-    <Navbar
-      bg={mod ? "primary" : "dark"}
-      variant="dark"
-      style={{ zIndex: "20", position: "fixed", width: "100%" }}
-    >
-      <Container>
-        <Image src={logo} roundedCircle style={{ height: "2rem" }} />
-      </Container>
-      <Container>
-        <Navbar.Brand>Expense Tracker app</Navbar.Brand>
-      </Container>
-      <Container>
+    <>
+      <Navbar
+        className="p-0"
+        style={{ textAlign: "center" }}
+        bg={mod ? "dark" : "primary"}
+        variant="dark"
+      >
+        <Col>
+          <Image
+            src={logo}
+            roundedCircle
+            style={{ height: "2rem", marginRight: "4rem" }}
+          />
+          <Navbar.Brand>Expense Tracker app</Navbar.Brand>
+        </Col>
+      </Navbar>
+      <Navbar
+        bg={mod ? "primary" : "dark"}
+        variant="dark"
+        style={{ textAlign: "center", justifyContent: "end" }}
+      >
         <Nav>
           {authorised && (
             <NavLink to="/welcome" style={{ margin: "5px" }}>
@@ -48,7 +65,7 @@ function Header() {
             </NavLink>
           )}
 
-          {authorised && total > 10000 && (
+          {authorised && total > 10000 && !primium && (
             <Button
               size="sm"
               variant="success"
@@ -88,8 +105,8 @@ function Header() {
             </Button>
           )}
         </Nav>
-      </Container>
-    </Navbar>
+      </Navbar>
+    </>
   );
 }
 export default Header;
