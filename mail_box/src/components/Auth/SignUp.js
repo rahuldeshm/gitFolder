@@ -20,7 +20,7 @@ function SignUp() {
         label="Password"
         style={{ color: "black" }}
       >
-        <FormControl type="password" placeholder="email" />
+        <FormControl type="password" placeholder="password" />
       </FloatingLabel>
       <FloatingLabel
         className="mb-3"
@@ -28,7 +28,7 @@ function SignUp() {
         label="Password"
         style={{ color: "black" }}
       >
-        <FormControl type="password" placeholder="email" />
+        <FormControl type="password" placeholder="password" />
       </FloatingLabel>
       <button className={`m-3 ${classes.btn}`} style={{ width: "90%" }}>
         Sign Up
