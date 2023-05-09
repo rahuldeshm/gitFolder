@@ -2,8 +2,10 @@ import React from "react";
 import { FloatingLabel, FormControl } from "react-bootstrap";
 import classes from "./SignUp.module.css";
 import { useRef } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function SignUp() {
+  const history = useHistory();
   const emailRef = useRef();
   const passRef = useRef();
   const cpassRef = useRef();
@@ -33,6 +35,7 @@ function SignUp() {
           res.json().then((data) => {
             console.log(data);
             localStorage.setItem("authorised", JSON.stringify(data));
+            history.push("/welcome");
           });
         } else {
           res.json().then((data) => {

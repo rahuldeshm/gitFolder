@@ -1,11 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Form, FormControl, InputGroup } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
 import classes from "./SignIn.module.css";
 import { useRef } from "react";
 import { useState } from "react";
 
 function SignIn() {
+  const history = useHistory();
   const [hide, setHide] = useState(false);
   const emailRef = useRef();
   const passRef = useRef();
@@ -29,6 +31,7 @@ function SignIn() {
         res.json().then((data) => {
           console.log(data);
           localStorage.setItem("authorised", JSON.stringify(data));
+          history.push("/welcome");
         });
       } else {
         res.json().then((data) => {
