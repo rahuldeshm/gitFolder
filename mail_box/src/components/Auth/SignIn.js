@@ -5,8 +5,11 @@ import { Form, InputGroup } from "react-bootstrap";
 import classes from "./SignIn.module.css";
 import { useRef } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../Store/authSlice";
 
 function SignIn() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [hide, setHide] = useState(false);
   const emailRef = useRef();
@@ -29,7 +32,7 @@ function SignIn() {
     ).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
-          console.log(data);
+          dispatch(authActions.login(data));
           localStorage.setItem("authorised", JSON.stringify(data));
           history.push("/welcome");
         });

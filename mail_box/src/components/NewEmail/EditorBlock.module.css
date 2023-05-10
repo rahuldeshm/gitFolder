@@ -1,0 +1,16 @@
+.editorbox {
+  height: 19rem;
+}
+.wrapper {
+  height: 15rem;
+  background-color: rgb(252, 246, 246);
+  overflow: hidden;
+}
+.editor {
+  padding-inline: 1px;
+  height: 15rem;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
