@@ -2,12 +2,13 @@ import classes from "./NewEmail.module.css";
 import { useState } from "react";
 import EditorBlock from "./EditorBlock";
 import { Button, FormLabel, InputGroup } from "react-bootstrap";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "../../Store/uiSlice";
 
 function NewEmail() {
+  const dispatch = useDispatch();
   const mymail = useSelector((state) => state.auth.authorisation.email);
-
   const [editorValue, setEditorValue] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -17,15 +18,13 @@ function NewEmail() {
 
   function sendMailHandler(e) {
     const myemaild = mymail.replace("@", "").replace(".", "");
-    console.log(myemaild);
-    const emailwithout = email.replace("@", "");
-    const emailwithoutd = emailwithout.replace(".", "");
+    const emailwithoutd = email.replace("@", "").replace(".", "");
 
     fetch(
       `https://mailbox-de8bb-default-rtdb.asia-southeast1.firebasedatabase.app/${emailwithoutd}/received.json`,
       {
         method: "POST",
-        body: JSON.stringify({ email, subject, editorValue }),
+        body: JSON.stringify({ email: mymail, subject, editorValue }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -44,9 +43,14 @@ function NewEmail() {
           }
         ).then((res) => {
           if (res.ok) {
+            dispatch(uiActions.loaderHandler());
             alert("email stored in sendbox and sent successfully");
+          } else {
+            alert("some error occurred");
           }
         });
+      } else {
+        alert("some error occurred");
       }
     });
   }
@@ -55,9 +59,12 @@ function NewEmail() {
     <>
       <div className={classes.overlay}></div>
       <div className={classes.modal}>
-        <Link to="/welcome">
-          <button className={classes.exitbtn}>x</button>
-        </Link>
+        <button
+          onClick={() => dispatch(uiActions.loaderHandler())}
+          className={classes.exitbtn}
+        >
+          x
+        </button>
         <InputGroup className={classes.to}>
           <FormLabel>To:</FormLabel>
           <input

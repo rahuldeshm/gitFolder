@@ -1,0 +1,14 @@
+.main {
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+.main button {
+  height: 6rem;
+  color: white;
+  background-color: rgb(66, 4, 4);
+  width: 100%;
+}
+.main p {
+  font-size: 0.7rem;
+}
