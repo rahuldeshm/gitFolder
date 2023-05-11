@@ -24,6 +24,9 @@ const mailSlice = createSlice({
       state.noofnew--;
       state.received = total;
     },
+    deleteMail(state, action) {
+      delete state.received[action.payload];
+    },
   },
 });
 
