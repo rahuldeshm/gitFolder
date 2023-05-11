@@ -8,7 +8,11 @@ import { uiActions } from "../../Store/uiSlice";
 
 function NewEmail() {
   const dispatch = useDispatch();
-  const mymail = useSelector((state) => state.auth.authorisation.email);
+  const authorisation = useSelector((state) => state.auth.authorisation);
+  const mymail = authorisation.email;
+  const profilePicture = !!authorisation.profilePicture
+    ? authorisation.profilePicture
+    : "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80";
   const [editorValue, setEditorValue] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -24,7 +28,13 @@ function NewEmail() {
       `https://mailbox-de8bb-default-rtdb.asia-southeast1.firebasedatabase.app/${emailwithoutd}/received.json`,
       {
         method: "POST",
-        body: JSON.stringify({ email: mymail, subject, editorValue }),
+        body: JSON.stringify({
+          email: mymail,
+          subject,
+          editorValue,
+          new: true,
+          profilePicture,
+        }),
         headers: {
           "Content-Type": "application/json",
         },

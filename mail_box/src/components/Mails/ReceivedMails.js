@@ -3,13 +3,33 @@ import { useSelector } from "react-redux";
 import NameEmail from "./NameEmail";
 
 function ReceivedMails() {
-  const received = useSelector((state) => state.mail.receivedMails);
-  console.log(received);
+  const received = useSelector((state) => state.mail.received);
+  let arr = [];
+  if (!!received) {
+    const keys = Object.keys(received);
+    for (let i = keys.length - 1; i > -1; i--) {
+      const withkey = { ...received[keys[i]], id: keys[i] };
+      arr.push(withkey);
+    }
+  }
+
   return (
-    <div>
-      <h3>Inbox</h3>
-      {received.map((e) => {
-        return <NameEmail key={e.subject} e={e} to={false} />;
+    <div
+      style={{
+        borderBottom: "1px solid #ccc",
+      }}
+    >
+      <h3
+        style={{
+          paddingLeft: "0.5rem",
+          borderBottom: "1px solid #ccc",
+          backgroundColor: "rgb(46, 17, 75)",
+        }}
+      >
+        Inbox
+      </h3>
+      {arr.map((e) => {
+        return <NameEmail key={e.id} e={e} to={false} />;
       })}
     </div>
   );

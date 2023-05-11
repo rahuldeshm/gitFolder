@@ -8,6 +8,9 @@
   border-right: 1px solid #ccc;
   background-color: rgb(10, 1, 19);
 }
+.active {
+  background-color: white;
+}
 .profile button {
   color: white;
   width: 100%;

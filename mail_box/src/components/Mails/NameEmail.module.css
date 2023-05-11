@@ -1,14 +1,30 @@
+.pic {
+  width: 15%;
+}
+.pic div {
+  margin: 0.5rem;
+  background-color: aqua;
+  border-radius: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+}
+
+.pic img {
+  height: 2rem;
+  object-fit: cover;
+  width: 2rem;
+}
+.details {
+  width: 85%;
+}
+
 .main {
-  justify-content: center;
-  border-bottom: 1px solid #ccc;
+  position: inherit;
+  display: flex;
+  border-bottom: 1px solid #e2e2eb;
   width: 100%;
 }
-.main button {
-  height: 6rem;
-  color: white;
-  background-color: rgb(66, 4, 4);
-  width: 100%;
-}
+
 .main p {
   font-size: 0.7rem;
 }
