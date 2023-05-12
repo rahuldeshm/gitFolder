@@ -26,18 +26,42 @@ function Welcome() {
             </button>
             <button
               className={no > 0 ? classes.active : classes.normal}
-              onClick={() => setInbox(!inbox)}
+              onClick={() => {
+                setInbox(true);
+                setSent(false);
+              }}
             >
               {no > 0 ? `Inbox ${no}` : "inbox"}
             </button>
-            <button onClick={() => setSent(!sent)}>Sent</button>
+            <button
+              onClick={() => {
+                setInbox(false);
+                setSent(true);
+              }}
+            >
+              Sent
+            </button>
           </div>
         </Row>
       </Col>
       {(inbox || sent) && (
         <Col sm={3} className={classes.mails}>
-          {inbox && <ReceivedMails />}
-          {sent && <SentMails />}
+          {inbox && (
+            <ReceivedMails
+              onClick={() => {
+                setInbox(false);
+                setSent(false);
+              }}
+            />
+          )}
+          {sent && (
+            <SentMails
+              onClick={() => {
+                setInbox(false);
+                setSent(false);
+              }}
+            />
+          )}
         </Col>
       )}
       <Col sm={inbox ? 6 : 9} className={classes.mail}>

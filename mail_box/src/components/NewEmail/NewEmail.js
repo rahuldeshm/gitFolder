@@ -5,6 +5,7 @@ import { Button, FormLabel, InputGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../Store/uiSlice";
+import { mailActions } from "../../Store/mailSlice";
 
 function NewEmail() {
   const dispatch = useDispatch();
@@ -54,6 +55,15 @@ function NewEmail() {
         ).then((res) => {
           if (res.ok) {
             dispatch(uiActions.loaderHandler());
+            res.json().then((data) => {
+              console.log(data);
+              dispatch(
+                mailActions.addNewMail({
+                  id: data.name,
+                  newm: { email, subject, editorValue },
+                })
+              );
+            });
             alert("email stored in sendbox and sent successfully");
           } else {
             alert("some error occurred");

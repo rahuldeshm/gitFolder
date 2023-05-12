@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import NameEmail from "./NameEmail";
+import { AiOutlineCaretLeft } from "react-icons/ai";
 
-function ReceivedMails() {
+function ReceivedMails(props) {
   const received = useSelector((state) => state.mail.received);
   let arr = [];
   if (!!received) {
@@ -21,15 +22,17 @@ function ReceivedMails() {
     >
       <h3
         style={{
+          textAlign: "end",
           paddingLeft: "0.5rem",
           borderBottom: "1px solid #ccc",
           backgroundColor: "rgb(46, 17, 75)",
         }}
       >
         Inbox
+        <AiOutlineCaretLeft onClick={props.onClick} />
       </h3>
       {arr.map((e) => {
-        return <NameEmail key={e.id} e={e} to={false} />;
+        return <NameEmail key={e.id} e={e} />;
       })}
     </div>
   );

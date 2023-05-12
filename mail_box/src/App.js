@@ -4,9 +4,10 @@ import AuthPage from "./components/Auth/AuthPage";
 import { Route, Switch, Redirect } from "react-router-dom/cjs/react-router-dom";
 import Welcome from "./components/MainPage/Welcome";
 import NewMail from "./components/NewEmail/NewEmail";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "./Store/mailSlice";
+import { currentActions } from "./Store/currentSlice";
 
 let first = true;
 
@@ -15,10 +16,22 @@ function App() {
   const loader = useSelector((state) => state.ui.loder);
   const mails = useSelector((state) => state.mail);
   const myemail = useSelector((state) => state.auth.authorisation);
+
+  const fetchedDataHandler = (data) => {
+    console.log("updated fetched data");
+    dispatch(
+      mailActions.setAllTheMails({
+        received: data.received,
+        sent: data.sent,
+      })
+    );
+  };
+
   function fetchMails() {
     if (myemail === null) {
       return;
     }
+
     const myemaild = myemail.email.replace("@", "").replace(".", "");
 
     fetch(
@@ -32,12 +45,11 @@ function App() {
     ).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
-          dispatch(
-            mailActions.setAllTheMails({
-              received: data.received,
-              sent: data.sent,
-            })
-          );
+          fetchedDataHandler(data);
+          const timeout = setTimeout(() => {
+            fetchMails();
+          }, 3000);
+          dispatch(currentActions.addtimeout(timeout));
         });
       }
     });
@@ -48,7 +60,6 @@ function App() {
       first = false;
       return;
     }
-    console.log("update runnde");
     const myemaild = myemail.email.replace("@", "").replace(".", "");
 
     fetch(
@@ -62,7 +73,6 @@ function App() {
       }
     ).then((res) => {
       if (res.ok) {
-        console.log("updated mail successfully");
       } else {
         res.json().then((data) => {
           alert(data.error.message);

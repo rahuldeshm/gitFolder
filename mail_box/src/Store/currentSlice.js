@@ -1,7 +1,6 @@
-import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { current: {} };
+const initialState = { current: {}, timeout: null };
 
 const currentSlice = createSlice({
   name: "current",
@@ -9,6 +8,12 @@ const currentSlice = createSlice({
   reducers: {
     addCurrent(state, action) {
       state.current = action.payload;
+    },
+    removeCurrent(state) {
+      state.current = {};
+    },
+    addtimeout(state, action) {
+      state.timeout = action.payload;
     },
   },
 });
