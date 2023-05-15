@@ -20,18 +20,29 @@ function Welcome() {
           <Profile />
         </div>
         <Row>
+          <div style={{ height: "13rem", padding: "2rem" }}>
+            <p style={{ width: "100%" }}>
+              &nbsp; &emsp; This is mail box here you can create account and
+              start messaging to those who are already on this platfrom or
+              invite them.
+            </p>
+          </div>
           <div style={{ height: "auto", borderbottom: "1px solid #ccc" }}>
-            <button onClick={() => dispatch(uiActions.loaderHandler())}>
+            <button onClick={() => dispatch(uiActions.newMailHandler())}>
               compose
             </button>
             <button
-              className={no > 0 ? classes.active : classes.normal}
+              style={
+                no > 0
+                  ? { backgroundColor: "green" }
+                  : { backgroundColor: "rgb(46, 17, 75)" }
+              }
               onClick={() => {
                 setInbox(true);
                 setSent(false);
               }}
             >
-              {no > 0 ? `Inbox ${no}` : "inbox"}
+              inbox{no > 0 ? <div>{no}</div> : ""}
             </button>
             <button
               onClick={() => {
@@ -42,6 +53,7 @@ function Welcome() {
               Sent
             </button>
           </div>
+          <div style={{ height: "3rem" }} />
         </Row>
       </Col>
       {(inbox || sent) && (
@@ -64,7 +76,7 @@ function Welcome() {
           )}
         </Col>
       )}
-      <Col sm={inbox ? 6 : 9} className={classes.mail}>
+      <Col sm={inbox || sent ? 6 : 9} className={classes.mail}>
         <CurrentMail />
       </Col>
     </div>

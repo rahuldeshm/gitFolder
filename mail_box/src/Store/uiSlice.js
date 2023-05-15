@@ -1,16 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { loder: false, newmail: false };
+const initialState = { loder: false };
 
 const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    loaderHandler(state) {
+    newMailHandler(state) {
       state.loder = !state.loder;
-    },
-    newmailHandler(state) {
-      state.newmail = !state.newmail;
     },
   },
 });

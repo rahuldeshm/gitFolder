@@ -54,7 +54,7 @@ function NewEmail() {
           }
         ).then((res) => {
           if (res.ok) {
-            dispatch(uiActions.loaderHandler());
+            dispatch(uiActions.newMailHandler());
             res.json().then((data) => {
               console.log(data);
               dispatch(
@@ -80,7 +80,7 @@ function NewEmail() {
       <div className={classes.overlay}></div>
       <div className={classes.modal}>
         <button
-          onClick={() => dispatch(uiActions.loaderHandler())}
+          onClick={() => dispatch(uiActions.newMailHandler())}
           className={classes.exitbtn}
         >
           x

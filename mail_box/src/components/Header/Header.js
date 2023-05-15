@@ -6,6 +6,7 @@ import mail from "./../../images/mail.png";
 import { Image } from "react-bootstrap";
 import { authActions } from "../../Store/authSlice";
 import { currentActions } from "../../Store/currentSlice";
+import { mailActions } from "../../Store/mailSlice";
 
 function Header() {
   const dispatch = useDispatch();
@@ -13,11 +14,11 @@ function Header() {
   const timeout = useSelector((state) => state.current.timeout);
 
   function logoutHandler() {
-    history.replace("/auth");
     clearTimeout(timeout);
     dispatch(authActions.logout());
     localStorage.removeItem("authorised");
     dispatch(currentActions.removeCurrent());
+    history.replace("/auth");
   }
   return (
     <Navbar
@@ -28,9 +29,11 @@ function Header() {
       <Container fluid>
         <Image src={mail} style={{ height: "2rem" }} />
         <Navbar.Brand>MAIL BOX</Navbar.Brand>
-        <Button onClick={logoutHandler} size="sm" variant="outline-danger">
-          Log out
-        </Button>
+        <a href="http://localhost:3000/auth">
+          <Button onClick={logoutHandler} size="sm" variant="outline-danger">
+            Log out
+          </Button>
+        </a>
       </Container>
     </Navbar>
   );

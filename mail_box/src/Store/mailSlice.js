@@ -32,7 +32,7 @@ const mailSlice = createSlice({
       }
     },
     addNewMail(state, action) {
-      state.sent[action.payload.id] = action.payload.newm;
+      state.sent = { ...state.sent, [action.payload.id]: action.payload.newm };
     },
   },
 });

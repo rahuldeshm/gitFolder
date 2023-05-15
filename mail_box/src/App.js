@@ -4,27 +4,37 @@ import AuthPage from "./components/Auth/AuthPage";
 import { Route, Switch, Redirect } from "react-router-dom/cjs/react-router-dom";
 import Welcome from "./components/MainPage/Welcome";
 import NewMail from "./components/NewEmail/NewEmail";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "./Store/mailSlice";
 import { currentActions } from "./Store/currentSlice";
 
 let first = true;
-
+let no = 0;
 function App() {
   const dispatch = useDispatch();
+
   const loader = useSelector((state) => state.ui.loder);
   const mails = useSelector((state) => state.mail);
   const myemail = useSelector((state) => state.auth.authorisation);
 
+  if (!!mails.received) {
+    no = Object.keys(mails.received).length;
+  }
   const fetchedDataHandler = (data) => {
-    console.log("updated fetched data");
-    dispatch(
-      mailActions.setAllTheMails({
-        received: data.received,
-        sent: data.sent,
-      })
-    );
+    if (!!data.received) {
+      const noo = Object.keys(data.received).length;
+      console.log("data received");
+      if (no < noo) {
+        console.log("data.updated");
+        dispatch(
+          mailActions.setAllTheMails({
+            received: data.received,
+            sent: data.sent,
+          })
+        );
+      }
+    }
   };
 
   function fetchMails() {
@@ -48,12 +58,13 @@ function App() {
           fetchedDataHandler(data);
           const timeout = setTimeout(() => {
             fetchMails();
-          }, 3000);
+          }, 20000);
           dispatch(currentActions.addtimeout(timeout));
         });
       }
     });
   }
+  useEffect(updateMails, [mails]);
   useEffect(fetchMails, [myemail]);
   function updateMails() {
     if (first) {
@@ -80,7 +91,6 @@ function App() {
       }
     });
   }
-  useEffect(updateMails, [mails]);
 
   return (
     <div style={{ backgroundColor: "rgb(36, 24, 10)" }}>

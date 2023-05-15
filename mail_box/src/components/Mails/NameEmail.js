@@ -16,8 +16,6 @@ function NameEmail(props) {
       <div onClick={showMailHandler} className={classes.main}>
         {!props.e.to && (
           <div className={classes.pic}>
-            {props.e.new && <div></div>}
-
             <Image
               src={
                 !!props.e.profilePicture
@@ -34,7 +32,11 @@ function NameEmail(props) {
             !props.e.to ? { paddingLeft: "0rem" } : { paddingLeft: "1rem" }
           }
         >
-          <h5>{props.e.subject}</h5>
+          <h5>
+            {props.e.subject}
+            {props.e.new && <div></div>}
+          </h5>
+
           <p>{`${props.e.to ? "Sent to" : "Received from"}: ${
             props.e.email
           }`}</p>
