@@ -38,7 +38,8 @@ function App() {
   };
 
   function fetchMails() {
-    if (myemail === null) {
+    if (myemail===null) {
+      no=0
       return;
     }
 
@@ -58,7 +59,7 @@ function App() {
           fetchedDataHandler(data);
           const timeout = setTimeout(() => {
             fetchMails();
-          }, 20000);
+          }, 7000);
           dispatch(currentActions.addtimeout(timeout));
         });
       }
@@ -71,6 +72,7 @@ function App() {
       first = false;
       return;
     }
+    
     const myemaild = myemail.email.replace("@", "").replace(".", "");
 
     fetch(

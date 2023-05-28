@@ -53,7 +53,7 @@ function Welcome() {
               Sent
             </button>
           </div>
-          <div style={{ height: "3rem" }} />
+          <div style={{ height: "1.6rem" }} />
         </Row>
       </Col>
       {(inbox || sent) && (

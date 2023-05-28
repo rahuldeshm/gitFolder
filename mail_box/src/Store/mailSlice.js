@@ -34,6 +34,11 @@ const mailSlice = createSlice({
     addNewMail(state, action) {
       state.sent = { ...state.sent, [action.payload.id]: action.payload.newm };
     },
+    clearAllMails(state,action){
+      state.received= {}
+      state.sent= {}
+      state.noofnew= 0 
+    },
   },
 });
 

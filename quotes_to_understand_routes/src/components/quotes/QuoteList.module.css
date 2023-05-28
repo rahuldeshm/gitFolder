@@ -23,3 +23,8 @@
 .sorting button:hover {
   background-color: #c2fafa;
 }
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

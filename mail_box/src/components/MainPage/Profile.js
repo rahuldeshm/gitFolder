@@ -27,7 +27,7 @@ function Profile() {
       if (res.ok) {
         res.json().then((data) => {
           alert(
-            "Profile updeted successfully, if you want to edit the profile then edit and again submit the data"
+            "Profile updeted successfully, From your next login the updated profile will be attached."
           );
         });
       } else {

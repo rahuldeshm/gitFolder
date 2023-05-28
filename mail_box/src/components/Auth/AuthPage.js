@@ -18,7 +18,7 @@ function AuthPage() {
           {signIn ? "Have an account? Log in" : "New Here? Sign Up"}
         </button>
       </Row>
-      <Row style={{ height: "5rem" }} />
+      <Row style={{ height: "5.4rem" }} />
     </Container>
   );
 }
