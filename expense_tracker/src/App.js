@@ -1,5 +1,4 @@
 import Auth from "./components/Auth/Auth";
-import "./App.css";
 import Header from "./components/Header/Header";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Welcome from "./components/Welcome/Welcome";
@@ -9,6 +8,7 @@ import ForgotPass from "./components/Auth/ForgotPass";
 import Loader from "./components/UI/Loader";
 import ExpensePage from "./components/Expense/ExpensePage";
 import { useSelector } from "react-redux";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   const ctx = useContext(DataContext);
@@ -30,14 +30,12 @@ function App() {
         </Route>
         {authorised && (
           <Route path="/welcome">
-            <Welcome />
+            <Layout />
+            {/* <Welcome />
+            <ExpensePage /> */}
           </Route>
         )}
-        {authorised && (
-          <Route path="/expenses">
-            <ExpensePage />
-          </Route>
-        )}
+
         <Route path="*">
           <Redirect to="/auth" />
         </Route>

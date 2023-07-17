@@ -33,9 +33,8 @@ function SignUp() {
       ).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
-            console.log(data);
-            localStorage.setItem("authorised", JSON.stringify(data));
-            history.push("/welcome");
+            alert("Account created Successfully login to continue")
+            history.push("/")
           });
         } else {
           res.json().then((data) => {

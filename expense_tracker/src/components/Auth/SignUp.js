@@ -16,8 +16,7 @@ function AuthForm(props) {
   function signupHandler(e) {
     e.preventDefault();
 
-    let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY";
+    let url = "http://localhost:3000/auth/signup";
     if (passRef.current.value === cpassRef.current.value) {
       ctx.loaderHandler();
       fetch(url, {

@@ -22,8 +22,7 @@ function Login() {
 
   function loginHandler(e) {
     e.preventDefault();
-    let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY";
+    let url = "http://localhost:3000/auth/signin";
     ctx.loaderHandler();
     fetch(url, {
       method: "POST",
@@ -38,6 +37,7 @@ function Login() {
     }).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
+          console.log(data);
           dispatch(authActions.login(data));
           localStorage.setItem("authorised", JSON.stringify(data));
           history.replace("/welcome");
@@ -45,7 +45,8 @@ function Login() {
         });
       } else {
         res.json().then((data) => {
-          alert(data.error.message);
+          console.log(data);
+          alert(data.err);
           ctx.loaderHandler();
         });
       }
@@ -110,6 +111,10 @@ function Login() {
         Log in
       </button>
       <Link to="/forgot-password"> Forgot password</Link>
+      <p style={{ fontSize: "12px", margin: "0px", padding: "0px" }}>
+        Demo Email: deshmukh@gmail.com
+      </p>
+      <p style={{ fontSize: "12px" }}> Demo Password: deshmukh</p>
     </Form>
   );
 }

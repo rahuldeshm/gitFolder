@@ -11,6 +11,10 @@ const profileSlice = createSlice({
       state.url = action.payload.url;
       state.emailVerified = action.payload.emailVerified;
     },
+    setProfile(state, action) {
+      state.name = action.payload.name;
+      state.url = action.payload.phone;
+    },
   },
 });
 

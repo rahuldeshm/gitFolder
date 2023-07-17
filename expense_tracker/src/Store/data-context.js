@@ -23,41 +23,17 @@ export function DataContextProvider(props) {
 
   function fetchDataFunction() {
     if (authorised) {
-      loaderHandler();
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            idToken: authorisation.idToken,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => {
-        if (res.ok) {
-          res.json().then((data) => {
-            if (data.users[0].displayName !== undefined) {
-              dispatch(
-                profileActions.setFetchedData({
-                  name: data.users[0].displayName,
-                  url: data.users[0].photoUrl,
-                  emailVerified: data.users[0].emailVerified,
-                })
-              );
-            }
-
-            loaderHandler();
-          });
-        } else {
-          res.json().then((data) => {
-            dispatch(authActions.logout());
-            setLoader(false);
-            alert(data.error.message);
-          });
-        }
-      });
+      if (authorisation.displayName !== undefined) {
+        dispatch(
+          profileActions.setFetchedData({
+            name: authorisation.displayName || "",
+            url: authorisation.phone || "",
+            emailVerified: authorisation.verified,
+          })
+        );
+      }
+    } else {
+      dispatch(authActions.logout());
     }
   }
   useEffect(fetchDataFunction, [authorisation, authorised, dispatch]);

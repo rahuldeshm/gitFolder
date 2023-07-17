@@ -12,6 +12,18 @@ import {
 } from "react-bootstrap";
 import DataContext from "../../Store/data-context";
 
+// try {
+//   const res = await axios.post("http://localhost:3000/auth/forgot", {
+//     email: e.target.email.value,
+//   });
+//   console.log(res.data);
+//   alert("Link Sent Successfully....");
+//   document.getElementById("fpp").checked = true;
+// } catch (err) {
+//   console.log(err);
+//   alert("Email couldn't Sent...");
+// }
+
 function ForgotPass() {
   const ctx = useContext(DataContext);
   const history = useHistory();
@@ -20,23 +32,19 @@ function ForgotPass() {
     e.preventDefault();
     console.log(emailRef.current.value);
     ctx.loaderHandler();
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAVVFxex2DkoJzmrbLNI1k-qI-CED2MHPY",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: emailRef.current.value,
-          requestType: "PASSWORD_RESET",
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((res) => {
+    fetch("http://localhost:3000/auth/forgot", {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailRef.current.value,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
       if (!res.ok) {
         res.json().then((data) => {
           console.log(data);
-          alert(data.error.message);
+          alert(data.err);
           ctx.loaderHandler();
         });
       } else {

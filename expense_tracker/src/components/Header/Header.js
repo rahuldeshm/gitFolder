@@ -1,15 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../images/lightning_sewer.webp";
-import {
-  Container,
-  Nav,
-  Navbar,
-  Image,
-  Button,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Nav, Navbar, Image, Button, Col } from "react-bootstrap";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../Store/authSlice";
@@ -26,87 +18,59 @@ function Header() {
     dispatch(authActions.logout());
   }
   return (
-    <>
-      <Navbar
-        className="p-0"
-        style={{ textAlign: "center" }}
-        bg={mod ? "dark" : "primary"}
-        variant="dark"
-      >
-        <Col>
-          <Image
-            src={logo}
-            roundedCircle
-            style={{ height: "2rem", marginRight: "4rem" }}
-          />
-          <Navbar.Brand>Expense Tracker app</Navbar.Brand>
-        </Col>
-      </Navbar>
-      <Navbar
-        bg={mod ? "primary" : "dark"}
-        variant="dark"
-        style={{ textAlign: "center", justifyContent: "end" }}
-      >
-        <Nav>
-          {authorised && (
-            <NavLink to="/welcome" style={{ margin: "5px" }}>
-              {" "}
-              <Button variant={mod ? "dark" : "primary"} size="sm">
-                Profile
-              </Button>
-            </NavLink>
-          )}
-          {authorised && (
-            <NavLink to="/expenses" style={{ margin: "5px" }}>
-              {" "}
-              <Button variant={mod ? "dark" : "primary"} size="sm">
-                Expense
-              </Button>
-            </NavLink>
-          )}
+    <Navbar bg={mod ? "primary" : "dark"} variant="dark">
+      <Col style={{ textAlign: "center" }}>
+        <Image
+          src={logo}
+          roundedCircle
+          style={{ height: "2rem", marginRight: "4rem" }}
+        />
+      </Col>
+      <Col style={{ textAlign: "center" }}>
+        <Navbar.Brand>Expense Tracker app</Navbar.Brand>
+      </Col>
+      <Col style={{ textAlign: "center" }}>
+        {authorised && total > 10000 && !primium && (
+          <Button
+            size="sm"
+            variant="success"
+            style={{ margin: "5px", width: "8rem" }}
+            onClick={() => {
+              dispatch(expenseActions.primiumHandler());
+            }}
+          >
+            Activate Primium
+          </Button>
+        )}
 
-          {authorised && total > 10000 && !primium && (
+        {authorised && (
+          <a href="http://localhost:3001/">
             <Button
-              size="sm"
-              variant="success"
-              style={{ margin: "5px", width: "8rem" }}
-              onClick={() => {
-                dispatch(expenseActions.primiumHandler());
-              }}
-            >
-              Activate Primium
-            </Button>
-          )}
-
-          {authorised && (
-            <a href="http://localhost:3000/">
-              <Button
-                style={{ margin: "5px" }}
-                size="sm"
-                onClick={logoutHandler}
-                variant="outline-danger"
-              >
-                logout
-              </Button>
-            </a>
-          )}
-          {authorised && primium && (
-            <Button
-              size="sm"
-              onClick={() => dispatch(themeActions.setTheme())}
-              variant={mod ? "primary" : "dark"}
               style={{ margin: "5px" }}
+              size="sm"
+              onClick={logoutHandler}
+              variant="outline-danger"
             >
-              {mod ? (
-                <BsFillSunFill style={{ height: "1rem" }} />
-              ) : (
-                <BsFillMoonStarsFill style={{ height: "1rem" }} />
-              )}
+              logout
             </Button>
-          )}
-        </Nav>
-      </Navbar>
-    </>
+          </a>
+        )}
+        {authorised && primium && (
+          <Button
+            size="sm"
+            onClick={() => dispatch(themeActions.setTheme())}
+            variant={mod ? "primary" : "dark"}
+            style={{ margin: "5px" }}
+          >
+            {mod ? (
+              <BsFillSunFill style={{ height: "1rem" }} />
+            ) : (
+              <BsFillMoonStarsFill style={{ height: "1rem" }} />
+            )}
+          </Button>
+        )}
+      </Col>
+    </Navbar>
   );
 }
 export default Header;
