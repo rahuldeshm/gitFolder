@@ -10,15 +10,16 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { editexpenseActions } from "../../Store/editexpenseSlice";
-import Download from "./Download";
+
+import Modal from "../UI/Modal";
+import { expenseActions } from "../../Store/expenseSlice";
 
 function NewExpense(props) {
-  const emailString = useSelector((state) => state.auth.emailString);
-  const primium = useSelector((state) => state.expense.primium);
+  const token = useSelector((state) => state.auth.authorisation);
   const dispatch = useDispatch();
   const edit = useSelector((state) => state.editexpense.edit);
   const editExpense = useSelector((state) => state.editexpense.editExpense);
-  const [cancel, setCancel] = useState(false);
+
   const [enteredPrice, setEnteredPrice] = useState("");
   const [enteredDiscription, setEnteredDiscription] = useState("");
   const [enteredCategary, setEnteredCategary] = useState("");
@@ -33,38 +34,43 @@ function NewExpense(props) {
       key = editExpense.key;
       method = "PUT";
     }
-    let url = `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${emailString}/${key}.json`;
-
     if (
       enteredDiscription !== "" &&
       enteredPrice !== "" &&
       enteredCategary !== ""
     ) {
-      fetch(url, {
+      fetch(`http://localhost:3000/expense/expenses`, {
         method: method,
         body: JSON.stringify({
-          discription: enteredDiscription,
+          id: key,
+          description: enteredDiscription,
           price: enteredPrice,
           categary: enteredCategary,
         }),
         headers: {
+          authorisation: token.idToken,
           "Content-Type": "application/json",
         },
       }).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
+            console.log(data);
             let finkey;
             if (method !== "PUT") {
-              finkey = data.name;
+              finkey = data.id;
             } else {
               finkey = key;
             }
-            props.onsubmit(
-              enteredPrice,
-              enteredDiscription,
-              enteredCategary,
-              finkey
+
+            dispatch(
+              expenseActions.addList({
+                price: enteredPrice,
+                discription: enteredDiscription,
+                categary: enteredCategary,
+                id: finkey,
+              })
             );
+            props.onClick();
             if (method === "PUT") {
               dispatch(
                 editexpenseActions.setEditExpense({
@@ -107,21 +113,18 @@ function NewExpense(props) {
     setEnteredCategary(e.target.value);
   }
   return (
-    <Container className="p-5" style={{ height: "auto", textAlign: "center" }}>
-      <Row>
-        {cancel && <h5>Add Expenses</h5>}
-        {!cancel && (
-          <Button
-            style={{ height: "4rem", marginTop: "5rem" }}
-            onClick={() => setCancel(true)}
-          >
-            Add Expenses
-          </Button>
-        )}
-      </Row>
-      {cancel && (
+    <Modal onClick={props.onClick}>
+      <Container
+        className="p-5"
+        style={{ height: "auto", textAlign: "center" }}
+      >
+        <Row>
+          <h5>Add Expenses</h5>
+        </Row>
+
         <Form onSubmit={addExpenseHandler}>
           <FormControl
+            type="number"
             value={enteredPrice}
             className="mt-4"
             placeholder="Money Spent"
@@ -151,17 +154,12 @@ function NewExpense(props) {
           <Button className="mt-3" onClick={addExpenseHandler}>
             Add Expense
           </Button>
-          <Button
-            className="mt-3"
-            variant="danger"
-            onClick={() => setCancel(false)}
-          >
+          <Button className="mt-3" variant="danger" onClick={props.onClick}>
             Cancel
           </Button>
         </Form>
-      )}
-      {primium && <Download />}
-    </Container>
+      </Container>
+    </Modal>
   );
 }
 

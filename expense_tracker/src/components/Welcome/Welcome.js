@@ -11,8 +11,6 @@ function Welcome() {
 
   const mod = useSelector((state) => state.theme.dark);
   let completed = profile ? "green" : "#ccc";
-  const bgcolor = mod ? "white" : "#0b3738";
-  const acolor = mod ? "#0b3738" : "white";
 
   function verifyEmailHandler() {
     ctx.loaderHandler();
@@ -40,11 +38,7 @@ function Welcome() {
   }
 
   return (
-    <Container
-      className="m-0 p-0"
-      fluid
-      style={{ backgroundColor: bgcolor, color: acolor }}
-    >
+    <Container className="m-0 p-0" fluid>
       <Col
         style={{
           backgroundColor: completed,

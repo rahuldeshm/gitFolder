@@ -9,7 +9,7 @@ import { themeActions } from "../../Store/themeSlice";
 import { expenseActions } from "../../Store/expenseSlice";
 function Header() {
   const mod = useSelector((state) => state.theme.dark);
-  const primium = useSelector((state) => state.expense.primium);
+  const auth = useSelector((state) => state.auth.authorisation);
   const dispatch = useDispatch();
   const total = useSelector((state) => state.expense.total);
   const authorised = useSelector((state) => state.auth.authorised);
@@ -18,19 +18,15 @@ function Header() {
     dispatch(authActions.logout());
   }
   return (
-    <Navbar bg={mod ? "primary" : "dark"} variant="dark">
-      <Col style={{ textAlign: "center" }}>
-        <Image
-          src={logo}
-          roundedCircle
-          style={{ height: "2rem", marginRight: "4rem" }}
-        />
-      </Col>
-      <Col style={{ textAlign: "center" }}>
-        <Navbar.Brand>Expense Tracker app</Navbar.Brand>
-      </Col>
-      <Col style={{ textAlign: "center" }}>
-        {authorised && total > 10000 && !primium && (
+    <Navbar
+      bg={mod ? "primary" : "dark"}
+      variant="dark"
+      style={{ display: "flex", justifyContent: "space-around" }}
+    >
+      <Image src={logo} roundedCircle style={{ height: "2rem" }} />
+      <Navbar.Brand>Expense Tracker app</Navbar.Brand>
+      <div>
+        {authorised && total > 10000 && !auth.ispremium && (
           <Button
             size="sm"
             variant="success"
@@ -55,7 +51,7 @@ function Header() {
             </Button>
           </a>
         )}
-        {authorised && primium && (
+        {authorised && auth.ispremium && (
           <Button
             size="sm"
             onClick={() => dispatch(themeActions.setTheme())}
@@ -69,7 +65,7 @@ function Header() {
             )}
           </Button>
         )}
-      </Col>
+      </div>
     </Navbar>
   );
 }

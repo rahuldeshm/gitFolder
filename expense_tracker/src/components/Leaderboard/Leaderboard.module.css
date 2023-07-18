@@ -1,0 +1,7 @@
+.leader {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0 5px salmon;
+  height: 43vh;
+  text-align: center;
+}

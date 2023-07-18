@@ -11,6 +11,7 @@
   justify-content: space-around;
   box-shadow: 0 0 5px red;
   margin: 1.3%;
+  border-radius: 1rem;
 }
 
 .icon {
@@ -19,4 +20,10 @@
 }
 .style:hover {
   cursor: pointer;
+}
+.icons {
+  color: rgb(17, 153, 17);
+}
+.iconsp {
+  color: gold;
 }

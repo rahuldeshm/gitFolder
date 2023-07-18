@@ -4,18 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { editexpenseActions } from "../../Store/editexpenseSlice";
 
 function ExpenseItem(props) {
-  const emailString = useSelector((state) => state.auth.emailString);
+  const token = useSelector((state) => state.auth.authorisation);
   const dispatch = useDispatch();
+
   function deleteHandler() {
-    fetch(
-      `https://expnesetracker-default-rtdb.firebaseio.com/expenses/${emailString}/${props.e.key}.json`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((res) => {
+    fetch(`http://localhost:3000/expense/expenses/${props.e.id}`, {
+      method: "DELETE",
+      headers: {
+        authorisation: token.idToken,
+        price: props.e.price,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
       if (res.ok) {
         props.deleteHandler(props.index);
         alert(`${props.e.discription} Deleted sussfully`);
@@ -28,15 +28,15 @@ function ExpenseItem(props) {
   }
   return (
     <Row
-      className="p-2 mt-4 mb-4"
+      className="p-2 mt-2"
       style={{
         borderRadius: "1rem",
-        backgroundColor: "#17241c",
-        boxShadow: "0 0 10px white",
+        boxShadow: "0 0 10px blue",
+        margin: "2px",
       }}
     >
       <Col className="p-3">
-        <h5>{`$${props.e.price}`}</h5>
+        <h5>{`Rs${props.e.price}`}</h5>
       </Col>
       <Col className="p-1">
         <p>{props.e.discription}</p>

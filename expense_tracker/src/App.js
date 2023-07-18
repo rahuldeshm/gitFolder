@@ -1,12 +1,10 @@
 import Auth from "./components/Auth/Auth";
 import Header from "./components/Header/Header";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Welcome from "./components/Welcome/Welcome";
 import { useContext } from "react";
 import DataContext from "./Store/data-context";
 import ForgotPass from "./components/Auth/ForgotPass";
 import Loader from "./components/UI/Loader";
-import ExpensePage from "./components/Expense/ExpensePage";
 import { useSelector } from "react-redux";
 import Layout from "./components/Layout/Layout";
 
@@ -31,8 +29,6 @@ function App() {
         {authorised && (
           <Route path="/welcome">
             <Layout />
-            {/* <Welcome />
-            <ExpensePage /> */}
           </Route>
         )}
 
