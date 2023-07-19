@@ -14,7 +14,6 @@ function Leaderboard() {
       .then((response) => {
         // data=response;
         response.json().then((data) => {
-          console.log(data);
           if (response.ok) {
             setData(data);
           }

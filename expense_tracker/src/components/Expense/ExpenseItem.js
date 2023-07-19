@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { editexpenseActions } from "../../Store/editexpenseSlice";
+import { expenseActions } from "../../Store/expenseSlice";
 
 function ExpenseItem(props) {
   const token = useSelector((state) => state.auth.authorisation);
@@ -17,14 +18,14 @@ function ExpenseItem(props) {
       },
     }).then((res) => {
       if (res.ok) {
-        props.deleteHandler(props.index);
+        dispatch(expenseActions.deleteList(props.index));
         alert(`${props.e.discription} Deleted sussfully`);
       }
     });
   }
   function editHandler() {
     dispatch(editexpenseActions.setEditExpense(props.e));
-    props.deleteHandler(props.index);
+    dispatch(expenseActions.deleteList(props.index));
   }
   return (
     <Row

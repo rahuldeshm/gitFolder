@@ -1,17 +1,58 @@
 import Auth from "./components/Auth/Auth";
 import Header from "./components/Header/Header";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import DataContext from "./Store/data-context";
 import ForgotPass from "./components/Auth/ForgotPass";
 import Loader from "./components/UI/Loader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "./components/Layout/Layout";
+import { expenseActions } from "./Store/expenseSlice";
 
 function App() {
   const ctx = useContext(DataContext);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.authorisation);
   const authorised = useSelector((state) => state.auth.authorised);
+  function fetchList() {
+    dispatch(expenseActions.deleteWholeList());
+    if (!token) {
+      return;
+    }
+    ctx.loaderHandler();
+    fetch(`http://localhost:3000/expense/expenses`, {
+      method: "GET",
+      headers: {
+        authorisation: token.idToken,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          const keys = Object.keys(data);
+          for (let i of keys) {
+            dispatch(
+              expenseActions.addList({
+                id: data[i].id,
+                price: data[i].price,
+                discription: data[i].description,
+                categary: data[i].categary,
+                createdAt: data[i].createdAt,
+              })
+            );
+          }
+        });
+        ctx.loaderHandler();
+      } else {
+        res.json().then((data) => {
+          ctx.loaderHandler();
+          alert(data.error.message);
+        });
+      }
+    });
+  }
 
+  useEffect(fetchList, [dispatch, token]);
   return (
     <>
       <Header></Header>

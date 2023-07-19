@@ -22,7 +22,7 @@ function NewExpense(props) {
 
   const [enteredPrice, setEnteredPrice] = useState("");
   const [enteredDiscription, setEnteredDiscription] = useState("");
-  const [enteredCategary, setEnteredCategary] = useState("");
+  const [enteredCategary, setEnteredCategary] = useState("Food");
   function addExpenseHandler(e) {
     e.preventDefault();
     let method;
@@ -56,10 +56,13 @@ function NewExpense(props) {
           res.json().then((data) => {
             console.log(data);
             let finkey;
+            let createdAt;
             if (method !== "PUT") {
               finkey = data.id;
+              createdAt = data.createdAt;
             } else {
               finkey = key;
+              createdAt = editExpense.createdAt;
             }
 
             dispatch(
@@ -68,6 +71,7 @@ function NewExpense(props) {
                 discription: enteredDiscription,
                 categary: enteredCategary,
                 id: finkey,
+                createdAt: createdAt,
               })
             );
             props.onClick();
@@ -144,10 +148,9 @@ function NewExpense(props) {
             placeholder="categary"
             onChange={categaryChangeHandler}
           >
-            <option>food</option>
-            <option>petrol</option>
-            <option>utensils</option>
-            <option>books</option>
+            <option>Food</option>
+            <option>Travel</option>
+            <option>Entertainment</option>
             <option>cloths</option>
             <option>other</option>
           </FormSelect>

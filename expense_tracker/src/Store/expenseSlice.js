@@ -5,7 +5,7 @@ const expenseSlice = createSlice({
   initialState,
   reducers: {
     addList(state, action) {
-      state.list = [...state.list, action.payload];
+      state.list = [action.payload, ...state.list];
       state.total = state.total + parseInt(action.payload.price);
     },
     deleteList(state, action) {
