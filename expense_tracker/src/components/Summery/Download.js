@@ -11,7 +11,7 @@ function Download() {
 
   return (
     <a href={url} download={"text.csv"}>
-      <button class="border-primary bg-primary">
+      <button className="border-primary bg-primary">
         {`Download .csv ( Rs ${total} )`}
       </button>
     </a>

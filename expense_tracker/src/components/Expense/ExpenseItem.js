@@ -40,10 +40,10 @@ function ExpenseItem(props) {
         </Col>
       </Row>
       <Row>
-        <Col sm={8} className="p-0">
+        <Col xs={8} className="p-0">
           <p>{props.e.discription}</p>
         </Col>
-        <Col sm={4}>
+        <Col xs={4}>
           <Button onClick={deleteHandler} size="sm" variant="outline-danger">
             <AiFillDelete size={18} />
           </Button>

@@ -48,11 +48,11 @@ function GetData() {
   return (
     <div
       style={{
+        maxHeight: "17rem",
         width: "100%",
         padding: "7px",
         height: "fit-content",
         position: "relative",
-        marginTop: "9px",
       }}
     >
       <FormSelect
