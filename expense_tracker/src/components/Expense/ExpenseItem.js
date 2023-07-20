@@ -1,8 +1,10 @@
 import React from "react";
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { editexpenseActions } from "../../Store/editexpenseSlice";
 import { expenseActions } from "../../Store/expenseSlice";
+import classes from "./ExpenseItem.module.css";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 function ExpenseItem(props) {
   const token = useSelector((state) => state.auth.authorisation);
@@ -28,32 +30,29 @@ function ExpenseItem(props) {
     dispatch(expenseActions.deleteList(props.index));
   }
   return (
-    <Row
-      className="p-2 mt-2"
-      style={{
-        borderRadius: "1rem",
-        boxShadow: "0 0 10px blue",
-        margin: "2px",
-      }}
-    >
-      <Col className="p-3">
-        <h5>{`Rs${props.e.price}`}</h5>
-      </Col>
-      <Col className="p-1">
-        <p>{props.e.discription}</p>
-      </Col>
-      <Col className="p-3">
-        <h5>{props.e.categary}</h5>
-      </Col>
-      <Col>
-        <Button onClick={deleteHandler} size="sm" variant="outline-danger">
-          X
-        </Button>
-        <Button onClick={editHandler} size="sm" variant="outline-success">
-          Edit
-        </Button>
-      </Col>
-    </Row>
+    <Container className={classes.item}>
+      <Row>
+        <Col className="p-1">
+          <h5>{`Rs${props.e.price}`}</h5>
+        </Col>
+        <Col className="p-1">
+          <h5>{props.e.categary}</h5>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={8} className="p-0">
+          <p>{props.e.discription}</p>
+        </Col>
+        <Col sm={4}>
+          <Button onClick={deleteHandler} size="sm" variant="outline-danger">
+            <AiFillDelete size={18} />
+          </Button>
+          <Button onClick={editHandler} size="sm" variant="outline-success">
+            <AiFillEdit size={18} />
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -8,11 +8,13 @@ import Profile from "../Welcome/Profile";
 import NewExpense from "../Expense/NewExpense";
 import { useSelector } from "react-redux";
 import Premium from "./Premium";
+import Summery from "../Summery/Summery";
 function MainButtons() {
   const [profile, setProfile] = useState(false);
   const auth = useSelector((state) => state.auth.authorisation);
   const edit = useSelector((state) => state.editexpense.edit);
   const [add, setAdd] = useState(false);
+  const [summ, setSumm] = useState(false);
   const verified = auth.verified && !!auth.phone;
   return (
     <>
@@ -30,13 +32,14 @@ function MainButtons() {
           <p>Profile</p>
         </div>
         <Premium />
-        <div className={classes.style}>
+        <div className={classes.style} onClick={() => setSumm(!summ)}>
           <MdDownloadForOffline className={classes.icon} size={100} />
           <p>Report</p>
         </div>
       </div>
       {profile && <Profile onClick={() => setProfile(!profile)} />}
       {(edit || add) && <NewExpense onClick={() => setAdd(!add)} />}
+      {summ && <Summery onClick={() => setSumm(!summ)} />}
     </>
   );
 }

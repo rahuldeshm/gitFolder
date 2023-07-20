@@ -1,4 +1,3 @@
-import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 function Download() {
   const list = useSelector((state) => state.expense.list);
@@ -12,17 +11,9 @@ function Download() {
 
   return (
     <a href={url} download={"text.csv"}>
-      <Button
-        variant="success"
-        style={{
-          width: "108%",
-          height: "4rem",
-          marginTop: "1rem",
-          marginLeft: "-0.7rem",
-        }}
-      >
-        {`Download Expenses $${total}`}
-      </Button>
+      <button class="border-primary bg-primary">
+        {`Download .csv ( Rs ${total} )`}
+      </button>
     </a>
   );
 }

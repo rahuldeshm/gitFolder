@@ -1,0 +1,5 @@
+.maindiv {
+  max-height: 30rem;
+  overflow-y: scroll;
+  text-align: center;
+}
