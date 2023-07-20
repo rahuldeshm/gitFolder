@@ -45,7 +45,6 @@ function GetData() {
   for (let key of keys) {
     dayValues.push({ label: key, value: days[key] });
   }
-  console.log(">>>>>>", dayValues, days);
   return (
     <div
       style={{
@@ -56,7 +55,6 @@ function GetData() {
         marginTop: "9px",
       }}
     >
-      <MainData values={type === "Monthly" ? monthValues : dayValues} />
       <FormSelect
         value={type}
         size="sm"
@@ -66,6 +64,7 @@ function GetData() {
         <option>Monthly</option>
         <option>Daily</option>
       </FormSelect>
+      <MainData values={type === "Monthly" ? monthValues : dayValues} />
     </div>
   );
 }

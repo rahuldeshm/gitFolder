@@ -18,7 +18,6 @@ function Leaderboard() {
             setData(data);
           }
         });
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);

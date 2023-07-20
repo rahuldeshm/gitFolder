@@ -27,76 +27,76 @@ function NewExpense(props) {
     e.preventDefault();
     let method;
     let key;
-    if (edit === true) {
+    if (!edit) {
       method = "POST";
       key = "";
     } else {
-      key = editExpense.key;
+      key = editExpense.id;
       method = "PUT";
     }
     if (
-      enteredDiscription !== "" &&
-      enteredPrice !== "" &&
-      enteredCategary !== ""
+      enteredDiscription === "" ||
+      enteredPrice === "" ||
+      enteredCategary === ""
     ) {
-      fetch(`http://localhost:3000/expense/expenses`, {
-        method: method,
-        body: JSON.stringify({
-          id: key,
-          description: enteredDiscription,
-          price: enteredPrice,
-          categary: enteredCategary,
-        }),
-        headers: {
-          authorisation: token.idToken,
-          "Content-Type": "application/json",
-        },
-      }).then((res) => {
-        if (res.ok) {
-          res.json().then((data) => {
-            console.log(data);
-            let finkey;
-            let createdAt;
-            if (method !== "PUT") {
-              finkey = data.id;
-              createdAt = data.createdAt;
-            } else {
-              finkey = key;
-              createdAt = editExpense.createdAt;
-            }
-
-            dispatch(
-              expenseActions.addList({
-                price: enteredPrice,
-                discription: enteredDiscription,
-                categary: enteredCategary,
-                id: finkey,
-                createdAt: createdAt,
-              })
-            );
-            props.onClick();
-            if (method === "PUT") {
-              dispatch(
-                editexpenseActions.setEditExpense({
-                  price: "",
-                  discription: "",
-                  categary: "",
-                })
-              );
-            }
-            setEnteredCategary("");
-            setEnteredDiscription("");
-            setEnteredPrice("");
-          });
-        } else {
-          res.json().then((data) => {
-            alert(data.error.message);
-          });
-        }
-      });
-    } else {
       alert("Fill All required fields");
     }
+    fetch(`http://localhost:3000/expense/expenses`, {
+      method: "POST",
+      body: JSON.stringify({
+        id: key,
+        description: enteredDiscription,
+        price: enteredPrice,
+        categary: enteredCategary,
+      }),
+      headers: {
+        authorisation: token.idToken,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          console.log(data);
+          let finkey;
+          let createdAt;
+          if (method !== "PUT") {
+            props.onClick();
+            finkey = data.id;
+            createdAt = data.createdAt;
+          } else {
+            finkey = key;
+            createdAt = editExpense.createdAt;
+          }
+
+          dispatch(
+            expenseActions.addList({
+              price: enteredPrice,
+              discription: enteredDiscription,
+              categary: enteredCategary,
+              id: finkey,
+              createdAt: createdAt,
+            })
+          );
+
+          if (method === "PUT") {
+            dispatch(
+              editexpenseActions.setEditExpense({
+                price: "",
+                discription: "",
+                categary: "",
+              })
+            );
+          }
+          setEnteredCategary("");
+          setEnteredDiscription("");
+          setEnteredPrice("");
+        });
+      } else {
+        res.json().then((data) => {
+          alert(data.error.message);
+        });
+      }
+    });
   }
 
   function editData() {
@@ -116,8 +116,22 @@ function NewExpense(props) {
   function categaryChangeHandler(e) {
     setEnteredCategary(e.target.value);
   }
+  function onCloseHandler() {
+    if (!edit) {
+      props.onClick();
+    } else {
+      dispatch(expenseActions.addList(editExpense));
+      dispatch(
+        editexpenseActions.setEditExpense({
+          price: "",
+          discription: "",
+          categary: "",
+        })
+      );
+    }
+  }
   return (
-    <Modal onClick={props.onClick}>
+    <Modal onClick={onCloseHandler}>
       <Container
         className="p-5"
         style={{ height: "auto", textAlign: "center" }}
@@ -157,7 +171,7 @@ function NewExpense(props) {
           <Button className="mt-3" onClick={addExpenseHandler}>
             Add Expense
           </Button>
-          <Button className="mt-3" variant="danger" onClick={props.onClick}>
+          <Button className="mt-3" variant="danger" onClick={onCloseHandler}>
             Cancel
           </Button>
         </Form>

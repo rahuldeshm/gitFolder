@@ -11,6 +11,7 @@ import Premium from "./Premium";
 function MainButtons() {
   const [profile, setProfile] = useState(false);
   const auth = useSelector((state) => state.auth.authorisation);
+  const edit = useSelector((state) => state.editexpense.edit);
   const [add, setAdd] = useState(false);
   const verified = auth.verified && !!auth.phone;
   return (
@@ -35,7 +36,7 @@ function MainButtons() {
         </div>
       </div>
       {profile && <Profile onClick={() => setProfile(!profile)} />}
-      {add && <NewExpense onClick={() => setAdd(!add)} />}
+      {(edit || add) && <NewExpense onClick={() => setAdd(!add)} />}
     </>
   );
 }

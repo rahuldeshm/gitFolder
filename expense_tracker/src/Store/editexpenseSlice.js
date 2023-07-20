@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  edit: true,
+  edit: false,
   editExpense: {
     price: "",
     discription: "",
