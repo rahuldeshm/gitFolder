@@ -7,8 +7,8 @@
   border-bottom: 1px solid red;
 }
 .expenses {
-  height: 30rem;
-
+  height: 78vh;
+  overflow: hidden;
   padding: 0.5rem;
 }
 .page {

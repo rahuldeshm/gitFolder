@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../../Store/expenseSlice";
-import DataContext from "../../Store/data-context";
 
 function useFetch() {
+  const perPage = useSelector((state) => state.expense.pageData.perPage);
   const list = useSelector((state) => state.expense.list);
   const dispatch = useDispatch();
 
@@ -15,6 +15,7 @@ function useFetch() {
         {
           method: "GET",
           headers: {
+            perPage: perPage,
             authorisation: token.idToken,
             "Content-Type": "application/json",
           },
@@ -41,6 +42,8 @@ function useFetch() {
       dispatch(expenseActions.addList(flist));
       dispatch(
         expenseActions.setPageData({
+          count: alldata.count,
+          perPage: alldata.perPage,
           currentPage: alldata.currentPage,
           totalPages: alldata.totalPages,
         })
@@ -51,7 +54,7 @@ function useFetch() {
   }
   useEffect(() => {
     fetchList();
-  }, []);
+  }, [perPage]);
   return [list, fetchList];
 }
 export default useFetch;

@@ -1,13 +1,15 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, FormSelect, Row } from "react-bootstrap";
 import ExpenseItem from "./ExpenseItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./Expenses.module.css";
 import useFetch from "../Custom/useFetch";
 import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import { expenseActions } from "../../Store/expenseSlice";
 
 function Expenses() {
   const mod = useSelector((state) => state.theme.dark);
+  const dispatch = useDispatch();
   const pageData = useSelector((state) => state.expense.pageData);
   console.log(pageData);
   const [list, setList] = useFetch();
@@ -35,11 +37,31 @@ function Expenses() {
   return (
     <Container className={classes.cont}>
       <Row className={classes.heading}>
-        <h5>EXPENSES</h5>
+        <Col xs={5}>
+          <h5>EXPENSES</h5>
+        </Col>
+        <Col xs={4}>Per Page</Col>
+        <Col xs={3}>
+          <FormSelect
+            value={pageData.perPage}
+            className="p-0"
+            placeholder="categary"
+            onChange={(e) => {
+              dispatch(expenseActions.setPerPage(e.target.value));
+              localStorage.setItem("perpage", JSON.stringify(e.target.value));
+            }}
+          >
+            <option>5</option>
+            <option>9</option>
+            <option>10</option>
+            <option>15</option>
+          </FormSelect>
+        </Col>
       </Row>
       <Row className={classes.expenses}>
         {list.map((e, index) => {
-          return <ExpenseItem index={index} key={e.id} e={e} />;
+          const nm = pageData.perPage * (pageData.currentPage - 1) + index + 1;
+          return <ExpenseItem index={index} key={e.id} e={e} nm={nm} />;
         })}
       </Row>
       <Row className={classes.page}>

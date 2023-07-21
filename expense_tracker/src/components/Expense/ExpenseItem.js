@@ -32,10 +32,13 @@ function ExpenseItem(props) {
   return (
     <Container className={classes.item}>
       <Row>
-        <Col className="p-1">
+        <Col sm={1} className="p-1">
+          <h5>{props.nm}</h5>
+        </Col>
+        <Col sm={5} className="p-1">
           <h5>{`Rs${props.e.price}`}</h5>
         </Col>
-        <Col className="p-1">
+        <Col sm={6} className="p-1">
           <h5>{props.e.categary}</h5>
         </Col>
       </Row>

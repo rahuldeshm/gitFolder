@@ -5,7 +5,7 @@ const initialState = {
   editExpense: {
     price: "",
     discription: "",
-    categary: "",
+    categary: "Food",
     key: "",
   },
 };

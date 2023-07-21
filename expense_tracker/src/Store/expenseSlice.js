@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+const perPage = JSON.parse(localStorage.getItem("perpage"));
 const initialState = {
   chartlist: [],
   list: [],
   primium: false,
-  pageData: { totalPages: 1, currentPage: 1 },
+  pageData: { perPage, count: 1, totalPages: 1, currentPage: 1 },
 };
 const expenseSlice = createSlice({
   name: "expense",
@@ -31,6 +32,9 @@ const expenseSlice = createSlice({
     },
     addIndList(state, action) {
       state.list = [action.payload, ...state.list];
+    },
+    setPerPage(state, action) {
+      state.pageData.perPage = action.payload;
     },
   },
 });
