@@ -5,12 +5,13 @@ function MainData(props) {
     labels: props.values.map((e) => e.label),
     datasets: [
       {
-        label: "Expense Done",
+        label: "Expense Done of last 12 days",
         data: props.values.map((data) => data.value),
         fill: true,
         tension: 0.5,
         pointRadius: 5,
         pointHoverRadius: 15,
+        maintainAspectRatio: false,
       },
     ],
   };

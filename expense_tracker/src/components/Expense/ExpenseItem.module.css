@@ -2,7 +2,7 @@
   overflow: hidden;
   height: 2rem;
   box-shadow: 0 0 10px blue;
-  margin-top: 9px;
+  margin: 9px;
   transition: 0.5s;
   border-radius: 5px;
 }

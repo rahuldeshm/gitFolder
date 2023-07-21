@@ -1,0 +1,30 @@
+.cont {
+  text-align: center;
+}
+.heading {
+  padding-top: 8px;
+  background-color: salmon;
+  border-bottom: 1px solid red;
+}
+.expenses {
+  height: 30rem;
+
+  padding: 0.5rem;
+}
+.page {
+  height: 40px;
+}
+.btn {
+  width: 2.5rem;
+}
+.activebtn {
+  width: 2.3rem;
+  background-color: salmon;
+}
+.active {
+  cursor: pointer;
+}
+.disabled:hover {
+  color: red;
+  cursor: not-allowed;
+}

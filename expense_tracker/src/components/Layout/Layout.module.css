@@ -1,31 +1,5 @@
 .chart {
-  min-height: max-content;
-  margin-bottom: 5rem;
-}
-
-@media (max-width: 768px) {
-  .custom-col {
-    height: 300px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 992px) {
-  .custom-col {
-    /* Styles for medium (md) viewport */
-    height: 400px;
-  }
-}
-
-@media (min-width: 993px) and (max-width: 1200px) {
-  .custom-col {
-    /* Styles for large (lg) viewport */
-    height: 500px;
-  }
-}
-
-@media (min-width: 1201px) {
-  .custom-col {
-    /* Styles for extra-large (xl) viewport */
-    height: 600px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

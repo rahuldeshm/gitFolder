@@ -38,11 +38,7 @@ function Layout() {
               <Leaderboard />
             </Col>
           </Row>
-          <Row
-            style={{
-              height: "45vh",
-            }}
-          >
+          <Row>
             <Col xs={12} className={classes.chart}>
               <GetData />
             </Col>
@@ -51,8 +47,8 @@ function Layout() {
         <Col
           xs={12}
           md={4}
-          className="mt-9 p-0 order-2 order-md-1 "
-          style={{ height: "90vh", overflowY: "scroll" }}
+          className=" p-0 order-2 order-md-1 "
+          style={{ height: "90vh" }}
         >
           <Expenses />
         </Col>

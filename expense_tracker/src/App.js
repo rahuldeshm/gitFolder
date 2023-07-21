@@ -20,7 +20,7 @@ function App() {
       return;
     }
     ctx.loaderHandler();
-    fetch(`http://localhost:3000/expense/expenses`, {
+    fetch(`http://localhost:3000/expense/expenset`, {
       method: "GET",
       headers: {
         authorisation: token.idToken,
@@ -30,17 +30,17 @@ function App() {
       if (res.ok) {
         res.json().then((data) => {
           const keys = Object.keys(data);
+          const flist = [];
           for (let i of keys) {
-            dispatch(
-              expenseActions.addList({
-                id: data[i].id,
-                price: data[i].price,
-                discription: data[i].description,
-                categary: data[i].categary,
-                createdAt: data[i].createdAt,
-              })
-            );
+            flist.push({
+              id: data[i].id,
+              price: data[i].price,
+              discription: data[i].description,
+              categary: data[i].categary,
+              createdAt: data[i].createdAt,
+            });
           }
+          dispatch(expenseActions.chartAdd(flist));
         });
         ctx.loaderHandler();
       } else {

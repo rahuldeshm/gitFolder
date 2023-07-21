@@ -69,7 +69,7 @@ function NewExpense(props) {
           }
 
           dispatch(
-            expenseActions.addList({
+            expenseActions.addIndList({
               price: enteredPrice,
               discription: enteredDiscription,
               categary: enteredCategary,
@@ -120,7 +120,7 @@ function NewExpense(props) {
     if (!edit) {
       props.onClick();
     } else {
-      dispatch(expenseActions.addList(editExpense));
+      dispatch(expenseActions.addIndList(editExpense));
       dispatch(
         editexpenseActions.setEditExpense({
           price: "",
