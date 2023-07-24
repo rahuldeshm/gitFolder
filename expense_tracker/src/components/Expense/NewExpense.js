@@ -41,7 +41,7 @@ function NewExpense(props) {
     ) {
       alert("Fill All required fields");
     }
-    fetch(`http://localhost:3000/expense/expenses`, {
+    fetch(`http://16.171.27.226:3000/expense/expenses`, {
       method: "POST",
       body: JSON.stringify({
         id: key,

@@ -2,7 +2,8 @@
   display: flex;
   flex-wrap: wrap;
 }
-.style {
+.style,
+.astyle {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -10,21 +11,21 @@
   width: 46%;
   align-items: center;
   justify-content: space-around;
-  box-shadow: 0 0 5px red;
+  box-shadow: 0 0 15px rgb(252, 2, 218) inset;
   margin: 2%;
   border-radius: 1rem;
+  background-color: rgb(51, 3, 95);
+  color: rgb(202, 198, 198);
+  border: 1px solid rgb(152, 2, 157);
 }
 
-.icon {
-  padding: 0px;
-  margin: 0px;
+.astyle {
+  background-color: rgb(21, 94, 24);
+  border: 1px solid rgb(12, 141, 131);
+  box-shadow: 0 0 15px rgb(2, 194, 252) inset;
+  color: gold;
 }
+
 .style:hover {
   cursor: pointer;
-}
-.icons {
-  color: rgb(17, 153, 17);
-}
-.iconsp {
-  color: gold;
 }

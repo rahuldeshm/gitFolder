@@ -28,7 +28,7 @@ function Summery(props) {
   const list = useSelector((state) => state.expense.list);
   async function fetchDownload() {
     try {
-      const resp = await fetch("http://localhost:3000/premium/download", {
+      const resp = await fetch("http://16.171.27.226:3000/premium/download", {
         method: "GET",
         headers: {
           authorisation: token.idToken,
@@ -52,13 +52,16 @@ function Summery(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await fetch("http://localhost:3000/premium/downloaded", {
-          method: "GET",
-          headers: {
-            authorisation: token.idToken,
-            "Content-Type": "application/json",
-          },
-        });
+        const resp = await fetch(
+          "http://16.171.27.226:3000/premium/downloaded",
+          {
+            method: "GET",
+            headers: {
+              authorisation: token.idToken,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const data = await resp.json();
         if (!resp.ok) {
           throw new Error("Something went wrong.");

@@ -14,7 +14,7 @@ function Welcome() {
 
   function verifyEmailHandler() {
     ctx.loaderHandler();
-    fetch("http://localhost:3000/profile/verify", {
+    fetch("http://16.171.27.226:3000/profile/verify", {
       method: "POST",
       body: JSON.stringify({
         email: authorisation.email,

@@ -16,7 +16,7 @@ function AuthForm(props) {
   function signupHandler(e) {
     e.preventDefault();
 
-    let url = "http://localhost:3000/auth/signup";
+    let url = "http://16.171.27.226:3000/auth/signup";
     if (passRef.current.value === cpassRef.current.value) {
       ctx.loaderHandler();
       fetch(url, {

@@ -23,7 +23,10 @@ function MainButtons() {
           <IoMdAddCircle className={classes.icon} size={100} />
           <p>Add Expense</p>
         </div>
-        <div className={classes.style} onClick={() => setProfile(!profile)}>
+        <div
+          className={verified ? classes.astyle : classes.style}
+          onClick={() => setProfile(!profile)}
+        >
           {verified ? (
             <BsFillCheckCircleFill className={classes.icons} size={75} />
           ) : (

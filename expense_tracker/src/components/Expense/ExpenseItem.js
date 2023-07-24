@@ -11,7 +11,7 @@ function ExpenseItem(props) {
   const dispatch = useDispatch();
 
   function deleteHandler() {
-    fetch(`http://localhost:3000/expense/expenses/${props.e.id}`, {
+    fetch(`http://16.171.27.226:3000/expense/expenses/${props.e.id}`, {
       method: "DELETE",
       headers: {
         authorisation: token.idToken,
@@ -32,13 +32,13 @@ function ExpenseItem(props) {
   return (
     <Container className={classes.item}>
       <Row>
-        <Col sm={1} className="p-1">
+        <Col xs={1} className="p-1">
           <h5>{props.nm}</h5>
         </Col>
-        <Col sm={5} className="p-1">
+        <Col xs={4} className="p-1">
           <h5>{`Rs${props.e.price}`}</h5>
         </Col>
-        <Col sm={6} className="p-1">
+        <Col sx={7} className="p-1">
           <h5>{props.e.categary}</h5>
         </Col>
       </Row>

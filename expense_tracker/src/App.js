@@ -20,7 +20,7 @@ function App() {
       return;
     }
     ctx.loaderHandler();
-    fetch(`http://localhost:3000/expense/expenset`, {
+    fetch(`http://16.171.27.226:3000/expense/expenset`, {
       method: "GET",
       headers: {
         authorisation: token.idToken,

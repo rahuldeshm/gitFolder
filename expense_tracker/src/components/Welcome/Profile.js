@@ -38,7 +38,7 @@ function Profile(props) {
     e.preventDefault();
     ctx.loaderHandler();
 
-    fetch("http://localhost:3000/profile/update", {
+    fetch("http://16.171.27.226:3000/profile/update", {
       method: "POST",
       body: JSON.stringify({
         username: enteredName,

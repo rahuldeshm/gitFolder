@@ -16,7 +16,7 @@ function Premium() {
     }
     try {
       const response = await fetch(
-        "http://localhost:3000/payment/createorder",
+        "http://16.171.27.226:3000/payment/createorder",
 
         {
           method: "POST",
@@ -34,7 +34,7 @@ function Premium() {
           order_id: data.order.id,
           handler: async function (payres) {
             const updateres = await fetch(
-              "http://localhost:3000/payment/update",
+              "http://16.171.27.226:3000/payment/update",
               {
                 method: "POST",
                 body: JSON.stringify({
@@ -59,7 +59,7 @@ function Premium() {
         rzpl.on("payment.failed", async function () {
           try {
             const updatere = await fetch(
-              "http://localhost:3000/payment/update",
+              "http://16.171.27.226:3000/payment/update",
               {
                 method: "POST",
                 body: JSON.stringify({
@@ -84,11 +84,11 @@ function Premium() {
   }
 
   return (
-    <div className={classes.style} onClick={raserHandler}>
-      <FaCrown
-        className={auth.ispremium ? classes.iconsp : classes.icon}
-        size={75}
-      />
+    <div
+      className={auth.ispremium ? classes.astyle : classes.style}
+      onClick={raserHandler}
+    >
+      <FaCrown size={75} />
       <p>{auth.ispremium ? "Premium User" : "Get Primium"}</p>
     </div>
   );

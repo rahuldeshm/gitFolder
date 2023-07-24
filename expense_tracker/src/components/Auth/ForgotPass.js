@@ -13,7 +13,7 @@ import {
 import DataContext from "../../Store/data-context";
 
 // try {
-//   const res = await axios.post("http://localhost:3000/auth/forgot", {
+//   const res = await axios.post("http://16.171.27.226:3000/auth/forgot", {
 //     email: e.target.email.value,
 //   });
 //   console.log(res.data);
@@ -32,7 +32,7 @@ function ForgotPass() {
     e.preventDefault();
     console.log(emailRef.current.value);
     ctx.loaderHandler();
-    fetch("http://localhost:3000/auth/forgot", {
+    fetch("http://16.171.27.226:3000/auth/forgot", {
       method: "POST",
       body: JSON.stringify({
         email: emailRef.current.value,

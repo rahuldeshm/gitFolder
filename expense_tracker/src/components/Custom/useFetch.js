@@ -11,7 +11,7 @@ function useFetch() {
   async function fetchList(page) {
     try {
       const res = await fetch(
-        `http://localhost:3000/expense/expenses?page=${page}`,
+        `http://16.171.27.226:3000/expense/expenses?page=${page}`,
         {
           method: "GET",
           headers: {

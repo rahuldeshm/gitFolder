@@ -22,7 +22,7 @@ function Login() {
 
   function loginHandler(e) {
     e.preventDefault();
-    let url = "http://localhost:3000/auth/signin";
+    let url = "http://16.171.27.226:3000/auth/signin";
     ctx.loaderHandler();
     fetch(url, {
       method: "POST",

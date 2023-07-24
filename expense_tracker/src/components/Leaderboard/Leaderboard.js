@@ -7,7 +7,7 @@ function Leaderboard() {
   const [data, setData] = useState([]);
   const token = useSelector((state) => state.auth.authorisation);
   function fetchleaderbord() {
-    fetch("http://localhost:3000/premium/leaderboard", {
+    fetch("http://16.171.27.226:3000/premium/leaderboard", {
       method: "GET",
       headers: { authorisation: token.idToken },
     })
